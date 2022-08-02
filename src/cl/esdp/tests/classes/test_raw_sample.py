@@ -9,11 +9,16 @@ import pytest
 from cl.esdp.core.classes.raw_sample import RawSample
 
 
-def test_compare():
-    """Test RawSample comparison."""
+class TestRawSample:
+    """
+    Tests for RawSample.
+    """
 
-    # Two empty instances are not equal
-    assert RawSample() != RawSample()
+    def test_compare(self):
+        """Test RawSample comparison."""
+
+        # Two empty instances are not equal
+        assert RawSample() != RawSample()
 
 
 if __name__ == '__main__':
