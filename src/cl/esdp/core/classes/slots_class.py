@@ -40,3 +40,10 @@ class SlotsClass:
         # Assignment to self makes them instance attributes
         self.instance_attribute = 1
         self.list_attribute = []
+
+    def __repr__(self):
+        """
+        Manually created string representation
+        of the class for use in debugger.
+        """
+        return f"instance_attribute={self.instance_attribute};list_attribute={self.list_attribute}"

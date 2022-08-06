@@ -5,6 +5,7 @@
 # license from CompatibL and with the inclusion of this copyright notice.
 
 import pytest
+from approvaltests import verify
 
 from cl.esdp.core.classes.slots_class import SlotsClass
 
@@ -24,6 +25,15 @@ class SlotsClassTest:
         # will throw an exception for AttrsClass
         with pytest.raises(AttributeError):
             obj.instance_attirbute = 2
+
+    def test_repr(self):
+        """Test how the instance will appear in the debugger."""
+
+        obj = SlotsClass()
+        obj.instance_attribute = 1
+        obj.list_attribute = [2, 3]
+        obj_repr = repr(obj)
+        verify(obj_repr)
 
     def test_list_attribute_initialization(self):
         """Test list initialization."""
