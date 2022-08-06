@@ -24,10 +24,11 @@ class TestAttrsClass:
         # will throw an exception for AttrsClass
         attrs_obj.instance_attirbute = 2
 
-    def test_compare(self):
-        """Test AttrsClass comparison."""
+    def test_equality(self):
+        """Test for the built-in equality operator."""
 
-        # Unlike for raw classes, empty instances of attrs classes are equal
+        # One expects these two instances to be equal, and they are
+        # without having to manually override the equality operator
         assert AttrsClass() == AttrsClass()
 
 

@@ -24,16 +24,17 @@ class TestUnsafeClass:
         unsafe_obj.instance_attirbute = 2
 
         # But not here, so it has the old value
-        assert unsafe_obj.instance_attribute == 1  # But not here
+        assert unsafe_obj.instance_attribute == 1
 
         # And there is now a second, unwanted attribute with typo in name
         assert unsafe_obj.instance_attirbute == 2
 
-    def test_compare(self):
-        """Test UnsafeClass comparison."""
+    def test_equality(self):
+        """Test for the built-in equality operator."""
 
-        # Two empty instances are not equal
-        assert UnsafeClass() != UnsafeClass()
+        # One expects these two instances to be equal,
+        # but with UnsafeClass they are not
+        assert UnsafeClass() == UnsafeClass()
 
 
 if __name__ == "__main__":
