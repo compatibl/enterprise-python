@@ -13,7 +13,16 @@
 # limitations under the License.
 
 
-class RawSample:
+class UnsafeClass:
     """
-    Raw Python class sample.
+    Example of unsafe programming practices in Python.
+
+    Specific issues are illustrated by the attributes
+    and methods of this class.
     """
+
+    def __init__(self):
+        """Manually created __init__."""
+
+        # Assigned value without initially declaring it
+        self.instance_attribute = 1

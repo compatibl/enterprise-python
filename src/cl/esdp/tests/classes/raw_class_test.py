@@ -6,19 +6,34 @@
 
 import pytest
 
-from cl.esdp.core.classes.raw_sample import RawSample
+from cl.esdp.core.classes.raw_class import UnsafeClass
 
 
-class TestRawSample:
+class TestUnsafeClass:
     """
-    Tests for RawSample.
+    Tests for UnsafeClass.
     """
+
+    def test_attribute_name(self):
+        """Test wrong attribute name."""
+
+        # Assign value of attribute with typo in name
+        unsafe_obj = UnsafeClass()
+
+        # Attribute name has a typo here
+        unsafe_obj.instance_attirbute = 2
+
+        # But not here, so it has the old value
+        assert unsafe_obj.instance_attribute == 1  # But not here
+
+        # And there is now a second, unwanted attribute with typo in name
+        assert unsafe_obj.instance_attirbute == 2
 
     def test_compare(self):
-        """Test RawSample comparison."""
+        """Test UnsafeClass comparison."""
 
         # Two empty instances are not equal
-        assert RawSample() != RawSample()
+        assert UnsafeClass() != UnsafeClass()
 
 
 if __name__ == "__main__":
