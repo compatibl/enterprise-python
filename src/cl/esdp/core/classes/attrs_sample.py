@@ -21,6 +21,7 @@ class AttrsSample:
     """
     Sample class for the attrs library.
     """
+
     int_param: Optional[int] = None
     """Optional integer parameter."""
 
