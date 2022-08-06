@@ -15,7 +15,7 @@ class TestUnsafeClass:
     """
 
     def test_attribute_name(self):
-        """Test wrong attribute name."""
+        """Test the effect of a typo in attribute name."""
 
         # Assign value of attribute with typo in name
         unsafe_obj = UnsafeClass()

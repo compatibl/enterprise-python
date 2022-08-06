@@ -14,6 +14,16 @@ class TestAttrsClass:
     Tests for AttrsClass.
     """
 
+    def test_attribute_name(self):
+        """Test the effect of a typo in attribute name."""
+
+        # Assign value of attribute with typo in name
+        attrs_obj = AttrsClass()
+
+        # Attribute name has a typo here, and this assignment
+        # will throw an exception for AttrsClass
+        attrs_obj.instance_attirbute = 2
+
     def test_compare(self):
         """Test AttrsClass comparison."""
 

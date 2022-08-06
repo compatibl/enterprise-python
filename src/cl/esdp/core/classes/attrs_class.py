@@ -22,7 +22,7 @@ class AttrsClass:
     Sample class for the attrs library.
     """
 
-    int_param: Optional[int] = None
+    instance_attribute: Optional[int] = None
     """Optional integer parameter."""
 
     def multiply_by_two(self) -> int:
