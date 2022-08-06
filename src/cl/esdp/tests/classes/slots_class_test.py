@@ -6,35 +6,31 @@
 
 import pytest
 
-from cl.esdp.core.classes.unsafe_class import UnsafeClass
+from cl.esdp.core.classes.slots_class import SlotsClass
 
 
-class UnsafeClassTest:
+class SlotsClassTest:
     """
-    Tests for UnsafeClass.
+    Tests for SlotsClass.
     """
 
     def test_attribute_name(self):
         """Test the effect of a typo in attribute name."""
 
         # Assign value of attribute with typo in name
-        obj = UnsafeClass()
+        obj = SlotsClass()
 
-        # Attribute name has a typo here
-        obj.instance_attirbute = 2
-
-        # But not here, so it has the old value
-        assert obj.instance_attribute == 1
-
-        # And there is now a second, unwanted attribute with typo in name
-        assert obj.instance_attirbute == 2
+        # Attribute name has a typo here, and this assignment
+        # will throw an exception for AttrsClass
+        with pytest.raises(AttributeError):
+            obj.instance_attirbute = 2
 
     def test_list_attribute_initialization(self):
         """Test the effect of initializing a list attribute using [] rather than list()."""
 
         # Crate two instances of the same class
-        obj_1 = UnsafeClass()
-        obj_2 = UnsafeClass()
+        obj_1 = SlotsClass()
+        obj_2 = SlotsClass()
 
         # Append element to the list attribute of the first instance
         obj_1.list_attribute = [1]
@@ -43,13 +39,17 @@ class UnsafeClassTest:
         # the list attribute of the first instance
         assert obj_2.list_attribute[0] == 1
 
+
+        # Attribute name has a typo here
+        obj.instance_attirbute = 2
+
     def test_equality(self):
         """Test for the built-in equality operator."""
 
         # One expects these two instances to be equal,
-        # but with UnsafeClass they are not
+        # but with SlotsClass they are not
         with pytest.raises(AssertionError):
-            assert UnsafeClass() == UnsafeClass()
+            assert SlotsClass() == SlotsClass()
 
 
 if __name__ == "__main__":
