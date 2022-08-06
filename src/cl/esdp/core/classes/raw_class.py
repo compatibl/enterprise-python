@@ -15,7 +15,7 @@
 
 class UnsafeClass:
     """
-    Example of unsafe programming practices in Python.
+    Example of unsafe class design practices in Python.
 
     Specific issues are illustrated by the attributes
     and methods of this class.
@@ -24,5 +24,5 @@ class UnsafeClass:
     def __init__(self):
         """Manually created __init__."""
 
-        # Assigned value without initially declaring it
+        # Assigning value to self creates an instance attribute
         self.instance_attribute = 1

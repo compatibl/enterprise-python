@@ -17,7 +17,7 @@ from typing import Optional
 
 
 @define
-class AttrsSample:
+class AttrsClass:
     """
     Sample class for the attrs library.
     """

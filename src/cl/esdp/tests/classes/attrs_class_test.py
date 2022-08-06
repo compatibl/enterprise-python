@@ -6,19 +6,19 @@
 
 import pytest
 
-from cl.esdp.core.classes.attrs_sample import AttrsSample
+from cl.esdp.core.classes.attrs_class import AttrsClass
 
 
-class TestAttrsSample:
+class TestAttrsClass:
     """
-    Tests for AttrsSample.
+    Tests for AttrsClass.
     """
 
     def test_compare(self):
-        """Test AttrsSample comparison."""
+        """Test AttrsClass comparison."""
 
         # Unlike for raw classes, empty instances of attrs classes are equal
-        assert AttrsSample() == AttrsSample()
+        assert AttrsClass() == AttrsClass()
 
 
 if __name__ == "__main__":

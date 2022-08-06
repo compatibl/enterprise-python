@@ -6,7 +6,7 @@
 
 import pytest
 
-from cl.esdp.core.classes.raw_class import UnsafeClass
+from cl.esdp.core.classes.unsafe_class import UnsafeClass
 
 
 class TestUnsafeClass:
