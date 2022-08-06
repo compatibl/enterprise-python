@@ -18,16 +18,34 @@ class TestUnsafeClass:
         """Test the effect of a typo in attribute name."""
 
         # Assign value of attribute with typo in name
-        unsafe_obj = UnsafeClass()
+        obj = UnsafeClass()
 
         # Attribute name has a typo here
-        unsafe_obj.instance_attirbute = 2
+        obj.instance_attirbute = 2
 
         # But not here, so it has the old value
-        assert unsafe_obj.instance_attribute == 1
+        assert obj.instance_attribute == 1
 
         # And there is now a second, unwanted attribute with typo in name
-        assert unsafe_obj.instance_attirbute == 2
+        assert obj.instance_attirbute == 2
+
+    def test_list_attribute_initialization(self):
+        """Test the effect of initializing a list attribute using [] rather than list()."""
+
+        # Crate two instances of the same class
+        obj_1 = UnsafeClass()
+        obj_2 = UnsafeClass()
+
+        # Append element to the list attribute of the first instance
+        obj_1.list_attribute = [1]
+
+        # Check that the element was added also to
+        # the list attribute of the first instance
+        assert obj_2.list_attribute[0] == 1
+
+
+        # Attribute name has a typo here
+        obj.instance_attirbute = 2
 
     def test_equality(self):
         """Test for the built-in equality operator."""

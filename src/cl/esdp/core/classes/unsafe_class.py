@@ -26,3 +26,6 @@ class UnsafeClass:
 
         # Assigning value to self creates an instance attribute
         self.instance_attribute = 1
+
+        # Assigning list attribute using []
+        self.list_attribute = None

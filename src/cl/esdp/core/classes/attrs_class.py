@@ -13,7 +13,7 @@
 # limitations under the License.
 
 from attrs import define
-from typing import Optional
+from typing import Optional, List
 
 
 @define
@@ -23,7 +23,10 @@ class AttrsClass:
     """
 
     instance_attribute: Optional[int] = None
-    """Optional integer parameter."""
+    """Optional integer attribute."""
+
+    list_attribute: List[int] = []
+    """List attribute assigned an empty list by default."""
 
     def multiply_by_two(self) -> int:
         """
