@@ -5,6 +5,7 @@
 # license from CompatibL and with the inclusion of this copyright notice.
 
 import pytest
+from approvaltests import verify
 
 from cl.esdp.core.classes.attrs_class import AttrsClass
 
@@ -31,6 +32,15 @@ class AttrsClassTest:
         # One expects these two instances to be equal, and they are
         # without having to manually override the equality operator
         assert AttrsClass() == AttrsClass()
+
+    def test_repr(self):
+        """Test how the instance will appear in the debugger."""
+
+        obj = AttrsClass()
+        obj.instance_attribute = 1
+        obj.list_attribute = [2, 3]
+        obj_repr = repr(obj)
+        verify(obj_repr)
 
     def test_list_attribute_initialization(self):
         """

@@ -5,6 +5,7 @@
 # license from CompatibL and with the inclusion of this copyright notice.
 
 import pytest
+from approvaltests import verify
 
 from cl.esdp.core.classes.unsafe_class import UnsafeClass
 
@@ -28,6 +29,15 @@ class UnsafeClassTest:
 
         # And there is now a second, unwanted attribute with typo in name
         assert obj.instance_attirbute == 2
+
+    def test_repr(self):
+        """Test how the instance will appear in the debugger."""
+
+        obj = UnsafeClass()
+        obj.instance_attribute = 1
+        obj.list_attribute = [2, 3]
+        obj_repr = repr(obj)
+        assert obj_repr.startswith("<cl.esdp.core.classes.unsafe_class.UnsafeClass object at")
 
     def test_list_attribute_initialization(self):
         """Test list initialization."""
