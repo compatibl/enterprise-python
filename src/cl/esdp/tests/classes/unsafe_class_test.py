@@ -34,7 +34,8 @@ class TestUnsafeClass:
 
         # One expects these two instances to be equal,
         # but with UnsafeClass they are not
-        assert UnsafeClass() == UnsafeClass()
+        with pytest.raises(AssertionError):
+            assert UnsafeClass() == UnsafeClass()
 
 
 if __name__ == "__main__":
