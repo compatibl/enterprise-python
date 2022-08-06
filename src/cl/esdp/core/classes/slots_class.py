@@ -27,10 +27,7 @@ class SlotsClass:
     """
 
     # To improve performance, manually reserve slots for each attribute
-    __slots__ = [
-        "instance_attribute",
-        "list_attribute"
-    ]
+    __slots__ = ["instance_attribute", "list_attribute"]
 
     # Specify attribute types here, however they still must be specified
     # inside __init__ in order to become instance attributes
