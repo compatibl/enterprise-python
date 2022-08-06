@@ -9,7 +9,7 @@ import pytest
 from cl.esdp.core.classes.attrs_class import AttrsClass
 
 
-class TestAttrsClass:
+class AttrsClassTest:
     """
     Tests for AttrsClass.
     """
@@ -18,11 +18,12 @@ class TestAttrsClass:
         """Test the effect of a typo in attribute name."""
 
         # Assign value of attribute with typo in name
-        attrs_obj = AttrsClass()
+        obj = AttrsClass()
 
         # Attribute name has a typo here, and this assignment
         # will throw an exception for AttrsClass
-        attrs_obj.instance_attirbute = 2
+        with pytest.raises(AttributeError):
+            obj.instance_attirbute = 2
 
     def test_equality(self):
         """Test for the built-in equality operator."""
