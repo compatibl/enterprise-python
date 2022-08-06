@@ -33,16 +33,19 @@ class AttrsClassTest:
         assert AttrsClass() == AttrsClass()
 
     def test_list_attribute_initialization(self):
-        """Test the effect of initializing a list attribute using [] rather than list()."""
+        """
+        Test the effect of initializing a mutable object
+        directly instead of using Factory(type).
+        """
 
-        # Create first class instance and append an element
+        # Create the first class instance and append an element
         # to the three list attributes
         obj_1 = AttrsClass()
         obj_1.list_attribute_with_init_bug_1.append(1)
         obj_1.list_attribute_with_init_bug_2.append(1)
         obj_1.list_attribute.append(1)
 
-        # Create second class instance that should have
+        # Create the second class instance that should have
         # three empty list attributes.
         obj_2 = AttrsClass()
 

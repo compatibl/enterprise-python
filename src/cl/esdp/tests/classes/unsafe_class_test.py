@@ -30,18 +30,20 @@ class UnsafeClassTest:
         assert obj.instance_attirbute == 2
 
     def test_list_attribute_initialization(self):
-        """Test the effect of initializing a list attribute using [] rather than list()."""
+        """Test list initialization."""
 
-        # Crate two instances of the same class
+        # Create the first class instance and append
+        # an element to the list attribute
         obj_1 = UnsafeClass()
+        obj_1.list_attribute.append(1)
+
+        # Create the second class instance that should have
+        # an empty list attribute.
         obj_2 = UnsafeClass()
 
-        # Append element to the list attribute of the first instance
-        obj_1.list_attribute = [1]
-
-        # Check that the element was added also to
-        # the list attribute of the first instance
-        assert obj_2.list_attribute[0] == 1
+        # Check that the list attribute in second
+        # class instance has zero size
+        assert len(obj_2.list_attribute) == 0
 
     def test_equality(self):
         """Test for the built-in equality operator."""

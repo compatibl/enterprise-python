@@ -12,6 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from typing import List
+
 
 class UnsafeClass:
     """
@@ -24,8 +26,9 @@ class UnsafeClass:
     def __init__(self):
         """Manually created __init__."""
 
-        # Assigning value to self creates an instance attribute
+        # Assigning default value to self.attribute_name
+        # creates instance attributes. Type is not
+        # specified, and the attributes are placed
+        # in the dictionary of attributes (__dict__).
         self.instance_attribute = 1
-
-        # Assigning list attribute using []
-        self.list_attribute = None
+        self.list_attribute = []
