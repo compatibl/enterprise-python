@@ -11,7 +11,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
+from attr import Factory
 from attrs import define
 from typing import Optional, List
 
@@ -25,8 +25,31 @@ class AttrsClass:
     instance_attribute: Optional[int] = None
     """Optional integer attribute."""
 
-    list_attribute: List[int] = []
-    """List attribute assigned an empty list by default."""
+    list_attribute_with_init_bug_1: List[int] = []
+    """
+    If an attribute is a mutable type, it has to
+    be initialized using Factory(type). Otherwise,
+    its default value will be unintentionally shared
+    between different class instances.
+    
+    This issue is a side effect of how attrs and similar
+    libraries use Python decorators to avoid excessive
+    boilerplate code required by raw Python approach 
+    shown in UnsafeClass to specify a new attribute.
+    This bug does not happen for UnsafeClass, making
+    it safe in this one respect.
+    """
+
+    list_attribute_with_init_bug_2: List[int] = list()
+    """
+    One may think that using constructor list() instead
+    of [] would help avoid the problem, but it does not.
+    """
+
+    list_attribute: List[int] = Factory(list)
+    """
+    Only assigning Factory(list) avoids this problem.
+    """
 
     def multiply_by_two(self) -> int:
         """
