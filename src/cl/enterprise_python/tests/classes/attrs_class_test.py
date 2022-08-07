@@ -7,7 +7,7 @@
 import pytest
 from approvaltests import verify
 
-from cl.esdp.core.classes.attrs_class import AttrsClass
+from cl.enterprise_python.core.classes.attrs_class import AttrsClass
 
 
 class AttrsClassTest:

@@ -7,7 +7,7 @@
 import pytest
 from approvaltests import verify
 
-from cl.esdp.core.classes.slots_class import SlotsClass
+from cl.enterprise_python.core.classes.slots_class import SlotsClass
 
 
 class SlotsClassTest:

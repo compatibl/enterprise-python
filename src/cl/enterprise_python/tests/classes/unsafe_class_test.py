@@ -7,7 +7,7 @@
 import pytest
 from approvaltests import verify
 
-from cl.esdp.core.classes.unsafe_class import UnsafeClass
+from cl.enterprise_python.core.classes.unsafe_class import UnsafeClass
 
 
 class UnsafeClassTest:
@@ -38,7 +38,7 @@ class UnsafeClassTest:
         obj.list_attribute = [2, 3]
         obj_repr = repr(obj)
         assert obj_repr.startswith(
-            "<cl.esdp.core.classes.unsafe_class.UnsafeClass object at"
+            "<cl.enterprise_python.core.classes.unsafe_class.UnsafeClass object at"
         )
 
     def test_list_attribute_initialization(self):
