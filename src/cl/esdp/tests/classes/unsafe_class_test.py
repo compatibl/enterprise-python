@@ -37,7 +37,9 @@ class UnsafeClassTest:
         obj.instance_attribute = 1
         obj.list_attribute = [2, 3]
         obj_repr = repr(obj)
-        assert obj_repr.startswith("<cl.esdp.core.classes.unsafe_class.UnsafeClass object at")
+        assert obj_repr.startswith(
+            "<cl.esdp.core.classes.unsafe_class.UnsafeClass object at"
+        )
 
     def test_list_attribute_initialization(self):
         """Test list initialization."""
