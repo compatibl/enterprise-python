@@ -26,7 +26,7 @@ class AttrsClass:
     instance_attribute: Optional[int] = None
     """Optional integer attribute."""
 
-    list_attribute_with_init_bug_1: List[int] = []
+    list_attribute_with_init_bug: List[int] = []
     """
     If an attribute is a mutable type, it has to
     be initialized using Factory(type). Otherwise,
@@ -39,12 +39,6 @@ class AttrsClass:
     shown in UnsafeClass to specify a new attribute.
     This bug does not happen for UnsafeClass, making
     it safe in this one respect.
-    """
-
-    list_attribute_with_init_bug_2: List[int] = []
-    """
-    One may think that using constructor list() instead
-    of [] would help avoid the problem, but it does not.
     """
 
     list_attribute: List[int] = Factory(list)
