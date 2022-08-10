@@ -23,7 +23,7 @@ class SlotsClassTest:
         # Attribute name has a typo here, and this assignment
         # will throw an exception for AttrsClass
         with pytest.raises(AttributeError):
-            obj.instance_attirbute = 2
+            obj.int_attirbute = 2
 
     def test_repr(self):
         """Test how the instance will appear in the debugger."""

@@ -21,13 +21,13 @@ class DataClassTest:
         obj = ep.UnsafeClass()
 
         # Attribute name has a typo here
-        obj.instance_attirbute = 2
+        obj.int_attirbute = 2
 
         # But not here, so it has the old value
         assert obj.int_attribute == 1
 
         # And there is now a second, unwanted attribute with typo in name
-        assert obj.instance_attirbute == 2
+        assert obj.int_attirbute == 2
 
     def test_equality(self):
         """Test for the built-in equality operator."""
