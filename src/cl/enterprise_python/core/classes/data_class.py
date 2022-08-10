@@ -13,35 +13,33 @@
 # limitations under the License.
 
 from typing import Optional, List
-from attr import Factory
-from attrs import define
+from dataclasses import dataclass, field
 
 
-@define
+@dataclass  # TODO - change to @dataclass(slots=True) after Python 3.10 upgrade
 class DataClass:
     """
-    Sample class for the attrs library.
+    Sample class for the dataclass decorator.
+
+    In Python 3.10 we could write @dataclass(slots=True),
+    but we are currently using Python 3.9 for this repo.
     """
 
     instance_attribute: Optional[int] = None
     """Optional integer attribute."""
 
-    list_attribute_with_init_bug: List[int] = []
-    """
-    If an attribute is a mutable type, it has to
-    be initialized using Factory(type). Otherwise,
-    its default value will be unintentionally shared
-    between different class instances.
-    
-    This issue is a side effect of how attrs and similar
-    libraries use Python decorators to avoid excessive
-    boilerplate code required by raw Python approach 
-    shown in UnsafeClass to specify a new attribute.
-    This bug does not happen for UnsafeClass, making
-    it safe in this one respect.
-    """
+    # list_attribute_with_init_bug: List[int] = []
+    #
+    # If this code was allowed, the default value would be
+    # unintentionally shared between different class instances.
+    #
+    # Fortunately, dataclass will not permit this code
+    # to run and uncommenting this code line would cause
+    # an error. Not all data class libraries offer such
+    # protection, for example the current version of attrs
+    # a similar code would execute and cause a bug.
 
-    list_attribute: List[int] = Factory(list)
+    list_attribute: List[int] = field(default_factory=list)
     """
-    Only assigning Factory(list) avoids this problem.
+    Use default_factory for mutable attributes.
     """
