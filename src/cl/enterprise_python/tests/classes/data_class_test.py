@@ -18,12 +18,16 @@ class DataClassTest:
         """Test the effect of a typo in attribute name."""
 
         # Assign value of attribute with typo in name
-        obj = ep.DataClass()
+        obj = ep.UnsafeClass()
 
-        # Attribute name has a typo here, and this assignment
-        # will throw an exception for DataClass
-        with pytest.raises(AttributeError):
-            obj.instance_attirbute = 2
+        # Attribute name has a typo here
+        obj.instance_attirbute = 2
+
+        # But not here, so it has the old value
+        assert obj.instance_attribute == 1
+
+        # And there is now a second, unwanted attribute with typo in name
+        assert obj.instance_attirbute == 2
 
     def test_equality(self):
         """Test for the built-in equality operator."""
