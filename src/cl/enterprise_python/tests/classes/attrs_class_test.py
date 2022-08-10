@@ -5,9 +5,8 @@
 # license from CompatibL and with the inclusion of this copyright notice.
 
 import pytest
+import cl.enterprise_python.core as ep
 from approvaltests import verify
-
-from cl.enterprise_python.core.classes.attrs_class import AttrsClass
 
 
 class AttrsClassTest:
@@ -19,7 +18,7 @@ class AttrsClassTest:
         """Test the effect of a typo in attribute name."""
 
         # Assign value of attribute with typo in name
-        obj = AttrsClass()
+        obj = ep.AttrsClass()
 
         # Attribute name has a typo here, and this assignment
         # will throw an exception for AttrsClass
@@ -31,12 +30,12 @@ class AttrsClassTest:
 
         # One expects these two instances to be equal, and they are
         # without having to manually override the equality operator
-        assert AttrsClass() == AttrsClass()
+        assert ep.AttrsClass() == ep.AttrsClass()
 
     def test_repr(self):
         """Test how the instance will appear in the debugger."""
 
-        obj = AttrsClass()
+        obj = ep.AttrsClass()
         obj.instance_attribute = 1
         obj.list_attribute = [2, 3]
         obj_repr = repr(obj)
@@ -50,13 +49,13 @@ class AttrsClassTest:
 
         # Create the first class instance and append elements
         # to list_attribute and list_attribute_with_init_bug.
-        obj_1 = AttrsClass()
+        obj_1 = ep.AttrsClass()
         obj_1.list_attribute_with_init_bug.append(1)
         obj_1.list_attribute.append(1)
 
         # Create the second class instance that should have
         # empty list_attribute and list_attribute_with_init_bug.
-        obj_2 = AttrsClass()
+        obj_2 = ep.AttrsClass()
 
         # Because list_attribute_with_init_bug is set to [],
         # it is assigned the same object inside obj_1 and obj_2.

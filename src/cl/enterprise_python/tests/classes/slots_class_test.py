@@ -5,9 +5,8 @@
 # license from CompatibL and with the inclusion of this copyright notice.
 
 import pytest
+import cl.enterprise_python.core as ep
 from approvaltests import verify
-
-from cl.enterprise_python.core.classes.slots_class import SlotsClass
 
 
 class SlotsClassTest:
@@ -19,7 +18,7 @@ class SlotsClassTest:
         """Test the effect of a typo in attribute name."""
 
         # Assign value of attribute with typo in name
-        obj = SlotsClass()
+        obj = ep.SlotsClass()
 
         # Attribute name has a typo here, and this assignment
         # will throw an exception for AttrsClass
@@ -29,7 +28,7 @@ class SlotsClassTest:
     def test_repr(self):
         """Test how the instance will appear in the debugger."""
 
-        obj = SlotsClass()
+        obj = ep.SlotsClass()
         obj.instance_attribute = 1
         obj.list_attribute = [2, 3]
         obj_repr = repr(obj)
@@ -40,12 +39,12 @@ class SlotsClassTest:
 
         # Create the first class instance and append
         # an element to the list attribute
-        obj_1 = SlotsClass()
+        obj_1 = ep.SlotsClass()
         obj_1.list_attribute.append(1)
 
         # Create the second class instance that should have
         # an empty list attribute.
-        obj_2 = SlotsClass()
+        obj_2 = ep.SlotsClass()
 
         # Check that the list attribute in second
         # class instance has zero size
@@ -55,9 +54,9 @@ class SlotsClassTest:
         """Test for the built-in equality operator."""
 
         # One expects these two instances to be equal,
-        # but with SlotsClass they are not
+        # but with ep.SlotsClass they are not
         with pytest.raises(AssertionError):
-            assert SlotsClass() == SlotsClass()
+            assert ep.SlotsClass() == ep.SlotsClass()
 
 
 if __name__ == "__main__":

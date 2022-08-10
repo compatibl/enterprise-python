@@ -5,9 +5,8 @@
 # license from CompatibL and with the inclusion of this copyright notice.
 
 import pytest
+import cl.enterprise_python.core as ep
 from approvaltests import verify
-
-from cl.enterprise_python.core.classes.unsafe_class import UnsafeClass
 
 
 class UnsafeClassTest:
@@ -19,7 +18,7 @@ class UnsafeClassTest:
         """Test the effect of a typo in attribute name."""
 
         # Assign value of attribute with typo in name
-        obj = UnsafeClass()
+        obj = ep.UnsafeClass()
 
         # Attribute name has a typo here
         obj.instance_attirbute = 2
@@ -33,7 +32,7 @@ class UnsafeClassTest:
     def test_repr(self):
         """Test how the instance will appear in the debugger."""
 
-        obj = UnsafeClass()
+        obj = ep.UnsafeClass()
         obj.instance_attribute = 1
         obj.list_attribute = [2, 3]
         obj_repr = repr(obj)
@@ -46,12 +45,12 @@ class UnsafeClassTest:
 
         # Create the first class instance and append
         # an element to the list attribute
-        obj_1 = UnsafeClass()
+        obj_1 = ep.UnsafeClass()
         obj_1.list_attribute.append(1)
 
         # Create the second class instance that should have
         # an empty list attribute.
-        obj_2 = UnsafeClass()
+        obj_2 = ep.UnsafeClass()
 
         # Check that the list attribute in second
         # class instance has zero size
@@ -61,9 +60,9 @@ class UnsafeClassTest:
         """Test for the built-in equality operator."""
 
         # One expects these two instances to be equal,
-        # but with UnsafeClass they are not
+        # but with ep.UnsafeClass they are not
         with pytest.raises(AssertionError):
-            assert UnsafeClass() == UnsafeClass()
+            assert ep.UnsafeClass() == ep.UnsafeClass()
 
 
 if __name__ == "__main__":
