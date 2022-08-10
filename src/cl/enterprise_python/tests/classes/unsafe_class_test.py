@@ -6,7 +6,6 @@
 
 import pytest
 import cl.enterprise_python.core as ep
-from approvaltests import verify
 
 
 class UnsafeClassTest:
