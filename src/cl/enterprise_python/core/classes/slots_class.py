@@ -46,4 +46,6 @@ class SlotsClass:
         Manually created string representation
         of the class for use in debugger.
         """
-        return f"int_attribute={self.int_attribute};list_attribute={self.list_attribute}"
+        return (
+            f"int_attribute={self.int_attribute};list_attribute={self.list_attribute}"
+        )

@@ -28,4 +28,3 @@ class PydanticClass(BaseModel):
     """
     Only assigning Factory(list) avoids this problem.
     """
-
