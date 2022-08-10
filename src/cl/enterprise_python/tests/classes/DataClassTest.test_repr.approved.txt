@@ -1,0 +1,1 @@
+DataClass(instance_attribute=1, list_attribute_with_init_bug=[], list_attribute=[2, 3])
