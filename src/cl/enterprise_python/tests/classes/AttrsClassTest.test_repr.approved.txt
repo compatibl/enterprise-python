@@ -1,1 +1,1 @@
-AttrsClass(instance_attribute=1, list_attribute_with_init_bug_1=[], list_attribute_with_init_bug_2=[], list_attribute=[2, 3])
+AttrsClass(instance_attribute=1, list_attribute_with_init_bug=[], list_attribute=[2, 3])
