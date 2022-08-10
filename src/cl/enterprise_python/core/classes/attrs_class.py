@@ -11,9 +11,10 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+
+from typing import Optional, List
 from attr import Factory
 from attrs import define
-from typing import Optional, List
 
 
 @define
@@ -40,7 +41,7 @@ class AttrsClass:
     it safe in this one respect.
     """
 
-    list_attribute_with_init_bug_2: List[int] = list()
+    list_attribute_with_init_bug_2: List[int] = []
     """
     One may think that using constructor list() instead
     of [] would help avoid the problem, but it does not.
@@ -50,9 +51,3 @@ class AttrsClass:
     """
     Only assigning Factory(list) avoids this problem.
     """
-
-    def multiply_by_two(self) -> int:
-        """
-        Multiply int_param by 2 and return the result.
-        """
-        return self.int_param * 2
