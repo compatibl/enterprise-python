@@ -55,8 +55,7 @@ class SlotsClassTest:
 
         # One expects these two instances to be equal,
         # but with ep.SlotsClass they are not
-        with pytest.raises(AssertionError):
-            assert ep.SlotsClass() == ep.SlotsClass()
+        assert ep.SlotsClass() != ep.SlotsClass()
 
 
 if __name__ == "__main__":

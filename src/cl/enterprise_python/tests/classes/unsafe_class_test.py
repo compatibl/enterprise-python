@@ -61,8 +61,7 @@ class UnsafeClassTest:
 
         # One expects these two instances to be equal,
         # but with ep.UnsafeClass they are not
-        with pytest.raises(AssertionError):
-            assert ep.UnsafeClass() == ep.UnsafeClass()
+        assert ep.UnsafeClass() != ep.UnsafeClass()
 
 
 if __name__ == "__main__":
