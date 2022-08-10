@@ -21,7 +21,7 @@ class PydanticClass(BaseModel):
     Sample class for the attrs library.
     """
 
-    instance_attribute: Optional[int] = None
+    int_attribute: Optional[int] = None
     """Optional integer attribute."""
 
     list_attribute: List[int] = []

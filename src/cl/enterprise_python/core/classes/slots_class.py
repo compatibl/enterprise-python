@@ -27,18 +27,18 @@ class SlotsClass:
     """
 
     # To improve performance, manually reserve slots for each attribute
-    __slots__ = ["instance_attribute", "list_attribute"]
+    __slots__ = ["int_attribute", "list_attribute"]
 
     # Specify attribute types here, however they still must be specified
     # inside __init__ in order to become instance attributes
-    instance_attribute: int
+    int_attribute: int
     list_attribute: List[int]
 
     def __init__(self):
         """Manually created __init__."""
 
         # Assignment to self makes them instance attributes
-        self.instance_attribute = 1
+        self.int_attribute = 1
         self.list_attribute = []
 
     def __repr__(self):
@@ -46,4 +46,4 @@ class SlotsClass:
         Manually created string representation
         of the class for use in debugger.
         """
-        return f"instance_attribute={self.instance_attribute};list_attribute={self.list_attribute}"
+        return f"int_attribute={self.int_attribute};list_attribute={self.list_attribute}"

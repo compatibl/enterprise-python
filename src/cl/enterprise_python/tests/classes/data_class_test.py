@@ -24,7 +24,7 @@ class DataClassTest:
         obj.instance_attirbute = 2
 
         # But not here, so it has the old value
-        assert obj.instance_attribute == 1
+        assert obj.int_attribute == 1
 
         # And there is now a second, unwanted attribute with typo in name
         assert obj.instance_attirbute == 2
@@ -40,7 +40,7 @@ class DataClassTest:
         """Test how the instance will appear in the debugger."""
 
         obj = ep.DataClass()
-        obj.instance_attribute = 1
+        obj.int_attribute = 1
         obj.list_attribute = [2, 3]
         obj_repr = repr(obj)
         verify(obj_repr)

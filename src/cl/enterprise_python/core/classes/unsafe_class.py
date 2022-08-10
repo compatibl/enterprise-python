@@ -27,5 +27,5 @@ class UnsafeClass:
         # creates instance attributes. Type is not
         # specified, and the attributes are placed
         # in the dictionary of attributes (__dict__).
-        self.instance_attribute = 1
+        self.int_attribute = 1
         self.list_attribute = []

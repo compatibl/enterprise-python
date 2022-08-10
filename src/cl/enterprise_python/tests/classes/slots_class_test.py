@@ -29,7 +29,7 @@ class SlotsClassTest:
         """Test how the instance will appear in the debugger."""
 
         obj = ep.SlotsClass()
-        obj.instance_attribute = 1
+        obj.int_attribute = 1
         obj.list_attribute = [2, 3]
         obj_repr = repr(obj)
         verify(obj_repr)

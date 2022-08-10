@@ -23,7 +23,7 @@ class AttrsClass:
     Sample class for the attrs library.
     """
 
-    instance_attribute: Optional[int] = None
+    int_attribute: Optional[int] = None
     """Optional integer attribute."""
 
     list_attribute_with_init_bug: List[int] = []

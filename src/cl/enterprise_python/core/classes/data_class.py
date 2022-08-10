@@ -25,7 +25,7 @@ class DataClass:
     but we are currently using Python 3.9 for this repo.
     """
 
-    instance_attribute: Optional[int] = None
+    int_attribute: Optional[int] = None
     """Optional integer attribute."""
 
     # list_attribute_with_init_bug: List[int] = []

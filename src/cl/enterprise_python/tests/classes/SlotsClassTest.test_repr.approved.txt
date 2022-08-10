@@ -1,1 +1,1 @@
-instance_attribute=1;list_attribute=[2, 3]
+int_attribute=1;list_attribute=[2, 3]

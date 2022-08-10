@@ -1,1 +1,1 @@
-DataClass(instance_attribute=1, list_attribute=[2, 3])
+DataClass(int_attribute=1, list_attribute=[2, 3])
