@@ -22,7 +22,7 @@ class PydanticClassTest:
 
         # Attribute name has a typo here, and this assignment
         # will throw an exception for PydanticClass
-        with pytest.raises(AttributeError):
+        with pytest.raises(ValueError):
             obj.instance_attirbute = 2
 
     def test_equality(self):
@@ -47,28 +47,14 @@ class PydanticClassTest:
         directly instead of using Factory(type).
         """
 
-        # Create the first class instance and append elements
-        # to list_attribute and list_attribute_with_init_bug.
+        # Create the first class instance and append an element
+        # to list_attribute.
         obj_1 = ep.PydanticClass()
-        obj_1.list_attribute_with_init_bug.append(1)
         obj_1.list_attribute.append(1)
 
         # Create the second class instance that should have
-        # empty list_attribute and list_attribute_with_init_bug.
+        # empty list_attribute, and it does
         obj_2 = ep.PydanticClass()
-
-        # Because list_attribute_with_init_bug is set to [],
-        # it is assigned the same object inside obj_1 and obj_2.
-        # This is not the intended behavior.
-        #
-        # This issue is a side effect of how attrs and similar
-        # libraries use Python decorators to avoid excessive
-        # boilerplate code required by raw Python.
-        assert len(obj_2.list_attribute_with_init_bug) == 1
-
-        # Because list_attribute uses Factory(list), it avoids
-        # this problem. The Factory creates a separate list
-        # instance for each class instance.
         assert len(obj_2.list_attribute) == 0
 
 
