@@ -106,7 +106,8 @@ class RelCrudTest:
                              )
             leg_table = sa.Table('rel_leg', metadata,
                                    sa.Column('leg_id', sa.String(255), nullable=False, primary_key=True),
-                                   sa.Column('trade_id', sa.String(255), nullable=False),
+                                   sa.Column('trade_id', sa.String(255), nullable=False,
+                                             foreign_key=sa.ForeignKey("rel_trade.trade_id")),
                                    sa.Column('leg_type', sa.String(255), nullable=True),
                                    sa.Column('leg_ccy', sa.String(255), nullable=True),
                                    )
@@ -114,13 +115,20 @@ class RelCrudTest:
 
             with Session(engine) as session:
 
-                # Write the records and commit
+                # Write the trade and leg records and commit
                 session.add_all(trades)
                 session.add_all(legs)
                 session.commit()
 
+                # Use join to query legs that belong to a trade
+                result = session.query(RelTrade).join(RelLeg).filter(Invoice.amount == 8500)
+                for row in result:
+                    for inv in row.invoices:
+                        print(row.id, row.name, inv.invno, inv.amount)
+
+
         # Drop database to clean up after the test
-        self.clean_up()
+        # self.clean_up()
 
 
 if __name__ == "__main__":

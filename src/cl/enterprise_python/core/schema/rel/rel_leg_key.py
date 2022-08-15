@@ -12,6 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import sqlalchemy as sa
 from sqlalchemy import Column, String
 from sqlalchemy.orm import declarative_base
 
@@ -25,3 +26,6 @@ class RelLegKey(Base):  # Must inherit from Base
 
     leg_id: str = Column(String, primary_key=True)
     """Unique trade identifier (primary key)."""
+
+    trade_id: str = Column(String, sa.ForeignKey("rel_trade.trade_id"))
+    """Identifier of trade to which the leg belongs (foreign key)."""

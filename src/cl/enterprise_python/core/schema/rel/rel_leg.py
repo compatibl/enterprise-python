@@ -12,15 +12,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import sqlalchemy as sa
 from sqlalchemy import Column, String
 from cl.enterprise_python.core.schema.rel.rel_leg_key import RelLegKey
 
 
 class RelLeg(RelLegKey):  # Inherits from RelLegKey that has primary key attributes
     """Swap leg."""
-
-    trade_id: str = Column(String)
-    """Identifier of trade to which the leg belongs (foreign key)."""
 
     leg_type: str = Column(String)
     """Leg type."""
