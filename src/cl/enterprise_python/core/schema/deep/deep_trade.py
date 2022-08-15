@@ -13,12 +13,12 @@
 # limitations under the License.
 
 import mongoengine as me
+from cl.enterprise_python.core.schema.deep.deep_leg import DeepLeg
+from cl.enterprise_python.core.schema.deep.deep_trade_key import DeepTradeKey
 
 
-class DeepTradeKey(me.Document):  # Must inherit from Document
-    """Primary key attributes of trade record."""
+class DeepTrade(DeepTradeKey):  # Inherits from DeepTradeKey that has primary key attributes
+    """Non-primary-key attributes common to all trades."""
 
-    meta = {'allow_inheritance': True}  # Permit inheritance of record classes to create class hierarchies
-
-    trade_id = me.StringField(max_length=50)
-    """Unique trade identifier (primary key)."""
+    trade_type = me.StringField(max_length=50)
+    """Trade type."""

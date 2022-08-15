@@ -14,14 +14,11 @@
 
 import mongoengine as me
 from cl.enterprise_python.core.schema.deep.deep_leg import DeepLeg
-from cl.enterprise_python.core.schema.deep.deep_swap_key import DeepSwapKey
+from cl.enterprise_python.core.schema.deep.deep_trade import DeepTrade
 
 
-class DeepSwap(DeepSwapKey):  # Inherits from DeepSwapKey that has primary key attributes
+class DeepSwap(DeepTrade):  # Inherits from DeepTrade that has attributes common to all trades
     """Remaining attributes of swap record."""
-
-    trade_type = me.StringField(max_length=50)
-    """Trade type."""
 
     legs = me.ListField(me.EmbeddedDocumentField(DeepLeg))
     """List of swap legs."""
