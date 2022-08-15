@@ -14,14 +14,11 @@
 
 import mongoengine as me
 from cl.enterprise_python.core.schema.shallow.shallow_leg import ShallowLeg
-from cl.enterprise_python.core.schema.shallow.shallow_trade import ShallowTrade
+from cl.enterprise_python.core.schema.shallow.shallow_trade_key import ShallowTradeKey
 
 
-class ShallowSwap(ShallowTrade):  # Inherits from ShallowTrade that has attributes common to all trades
-    """Remaining attributes of swap record."""
+class ShallowTrade(ShallowTradeKey):  # Inherits from ShallowTradeKey that has primary key attributes
+    """Non-primary-key attributes common to all trades."""
 
-    leg_type = me.ListField(me.StringField(max_length=50))
-    """List of leg types."""
-
-    leg_ccy = me.ListField(me.StringField(max_length=3))
-    """List of leg currencies."""
+    trade_type = me.StringField(max_length=50)
+    """Trade type."""

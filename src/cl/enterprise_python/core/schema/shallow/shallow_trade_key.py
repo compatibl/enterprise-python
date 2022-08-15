@@ -13,15 +13,12 @@
 # limitations under the License.
 
 import mongoengine as me
-from cl.enterprise_python.core.schema.shallow.shallow_leg import ShallowLeg
-from cl.enterprise_python.core.schema.shallow.shallow_trade import ShallowTrade
 
 
-class ShallowSwap(ShallowTrade):  # Inherits from ShallowTrade that has attributes common to all trades
-    """Remaining attributes of swap record."""
+class ShallowTradeKey(me.Document):  # Must inherit from Document
+    """Primary key attributes of trade record."""
 
-    leg_type = me.ListField(me.StringField(max_length=50))
-    """List of leg types."""
+    meta = {'allow_inheritance': True}  # Permit inheritance of record classes to create class hierarchies
 
-    leg_ccy = me.ListField(me.StringField(max_length=3))
-    """List of leg currencies."""
+    trade_id = me.StringField(max_length=50)
+    """Unique trade identifier (primary key)."""

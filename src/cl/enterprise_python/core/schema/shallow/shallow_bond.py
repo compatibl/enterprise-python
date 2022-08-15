@@ -13,15 +13,14 @@
 # limitations under the License.
 
 import mongoengine as me
-from cl.enterprise_python.core.schema.shallow.shallow_leg import ShallowLeg
 from cl.enterprise_python.core.schema.shallow.shallow_trade import ShallowTrade
 
 
-class ShallowSwap(ShallowTrade):  # Inherits from ShallowTrade that has attributes common to all trades
-    """Remaining attributes of swap record."""
+class ShallowBond(ShallowTrade):  # Inherits from ShallowTrade that has attributes common to all trades
+    """Remaining attributes of bond record."""
 
-    leg_type = me.ListField(me.StringField(max_length=50))
-    """List of leg types."""
+    bond_type = me.StringField(max_length=50)
+    """Bond type."""
 
-    leg_ccy = me.ListField(me.StringField(max_length=3))
-    """List of leg currencies."""
+    bond_ccy = me.StringField(max_length=3)
+    """Bond currency."""
