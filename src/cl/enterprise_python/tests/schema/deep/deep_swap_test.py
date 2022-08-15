@@ -45,15 +45,7 @@ class DeepSwapTest:
         This method does not write to the database.
         """
 
-    def test_crud(self):
-        """Test CRUD operations."""
-
-        # Connect and set connection parameters
-        connection = self.connect()
-
-        # Drop database in case it is left over from the previous test
-        self.clean_up(connection)
-
+        # Create a list of currencies to populate swap records
         ccy_list = ["USD", "GBP", "JPY", "NOK", "AUD"]
         ccy_count = len(ccy_list)
 
@@ -69,12 +61,29 @@ class DeepSwapTest:
             )
             for i in range(5)
         ]
+        return records
+
+    def test_crud(self):
+        """Test CRUD operations."""
+
+        # Connect and set connection parameters
+        connection = self.connect()
+
+        # Drop database in case it is left over from the previous test
+        self.clean_up(connection)
+
+        ccy_list = ["USD", "GBP", "JPY", "NOK", "AUD"]
+        ccy_count = len(ccy_list)
+
+        # Create swap records
+        records = self.create_records()
 
         # TODO - use bulk insert
         for record in records:
             record.save()
 
         # Retrieve all records
+        print()
         for swap in DeepSwap.objects:
             print(swap.trade_id)
 
