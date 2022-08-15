@@ -95,8 +95,8 @@ class WideCrudTest:
         # Retrieve all records
         print()
         print("All trades")
-        for swap in WideTrade.objects:
-            print(swap.trade_id)
+        for trade in WideTrade.objects:
+            print(trade.trade_id)
 
         # Retrieve only the swap records
         print()
