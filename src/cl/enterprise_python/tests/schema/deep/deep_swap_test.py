@@ -16,11 +16,14 @@
 import pytest
 import mongoengine as me
 from typing import List, Any
+
+from cl.enterprise_python.core.schema.deep.deep_bond import DeepBond
 from cl.enterprise_python.core.schema.deep.deep_leg import DeepLeg
 from cl.enterprise_python.core.schema.deep.deep_swap import DeepSwap
+from cl.enterprise_python.core.schema.deep.deep_trade import DeepTrade
 
 
-class DeepSwapTest:
+class DeepCrudTest:
     """
     Tests for DeepSwap using MongoEngine ODM and deep style of embedding.
     """
@@ -39,7 +42,7 @@ class DeepSwapTest:
         """Drop database to clean up before and after the test."""
         connection.drop_database(__name__)
 
-    def create_records(self) -> List[DeepSwap]:
+    def create_records(self) -> List[DeepTrade]:
         """
         Return a list of random records objects.
         This method does not write to the database.
@@ -48,20 +51,31 @@ class DeepSwapTest:
         # Create a list of currencies to populate swap records
         ccy_list = ["USD", "GBP", "JPY", "NOK", "AUD"]
         ccy_count = len(ccy_list)
+        type_list = ["Fixed", "Floating"]
+        type_count = len(type_list)
 
         # Create swap records
-        records = [
+        swaps = [
             DeepSwap(
-                trade_id=f"T{i}",
+                trade_id=f"T{i+1}",
                 trade_type="Swap",
                 legs=[
                     DeepLeg(leg_type="Fixed", leg_ccy=ccy_list[i % ccy_count]),
                     DeepLeg(leg_type="Floating", leg_ccy="EUR")
                 ]
             )
-            for i in range(5)
+            for i in range(0, 2)
         ]
-        return records
+        bonds = [
+            DeepBond(
+                trade_id=f"T{i+1}",
+                trade_type="Bond",
+                bond_type=type_list[i % type_count],
+                bond_ccy=ccy_list[i % ccy_count]
+            )
+            for i in range(2, 3)
+        ]
+        return swaps + bonds
 
     def test_crud(self):
         """Test CRUD operations."""
@@ -71,9 +85,6 @@ class DeepSwapTest:
 
         # Drop database in case it is left over from the previous test
         self.clean_up(connection)
-
-        ccy_list = ["USD", "GBP", "JPY", "NOK", "AUD"]
-        ccy_count = len(ccy_list)
 
         # Create swap records
         records = self.create_records()
@@ -88,7 +99,7 @@ class DeepSwapTest:
             print(swap.trade_id)
 
         # Drop database to clean up after the test
-        self.clean_up(connection)
+        # self.clean_up(connection)
 
 
 if __name__ == "__main__":
