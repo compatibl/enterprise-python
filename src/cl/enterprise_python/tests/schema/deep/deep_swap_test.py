@@ -12,9 +12,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+
 import pytest
 import mongoengine as me
-
+from typing import List, Any
 from cl.enterprise_python.core.schema.deep.deep_leg import DeepLeg
 from cl.enterprise_python.core.schema.deep.deep_swap import DeepSwap
 
@@ -24,15 +25,34 @@ class DeepSwapTest:
     Tests for DeepSwap using MongoEngine ODM and deep style of embedding.
     """
 
+    def connect(self) -> Any:
+        """
+        Connect and return connection object.
+
+        MongoEngine provides no explicit type for
+        the connection so Any is used in annotation.
+        """
+        # Connect to the database using class name for the table
+        return me.connect(__name__)
+
+    def clean_up(self, connection: Any) -> None:
+        """Drop database to clean up before and after the test."""
+        connection.drop_database(__name__)
+
+    def create_records(self) -> List[DeepSwap]:
+        """
+        Return a list of random records objects.
+        This method does not write to the database.
+        """
+
     def test_crud(self):
         """Test CRUD operations."""
 
-        # Connect to the database
-        db_name = "deep_test_write"
-        connection = me.connect(db_name)
+        # Connect and set connection parameters
+        connection = self.connect()
 
-        # Drop database if exists so the test begins from scratch
-        connection.drop_database(db_name)
+        # Drop database in case it is left over from the previous test
+        self.clean_up(connection)
 
         ccy_list = ["USD", "GBP", "JPY", "NOK", "AUD"]
         ccy_count = len(ccy_list)
@@ -58,8 +78,8 @@ class DeepSwapTest:
         for swap in DeepSwap.objects:
             print(swap.trade_id)
 
-        # Drop database to clean up
-        connection.drop_database(db_name)
+        # Drop database to clean up after the test
+        self.clean_up(connection)
 
 
 if __name__ == "__main__":
