@@ -20,7 +20,7 @@ from cl.enterprise_python.core.schema.rel.rel_leg_key import RelLegKey
 class RelLeg(RelLegKey):  # Inherits from RelLegKey that has primary key attributes
     """Swap leg."""
 
-    trade_id: str = Column(String, sa.ForeignKey("rel_trade.trade_id"))
+    trade_id: str = Column(String)
     """Identifier of trade to which the leg belongs (foreign key)."""
 
     leg_type: str = Column(String)
