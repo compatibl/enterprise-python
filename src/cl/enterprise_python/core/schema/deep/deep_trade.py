@@ -13,7 +13,6 @@
 # limitations under the License.
 
 import mongoengine as me
-from cl.enterprise_python.core.schema.deep.deep_leg import DeepLeg
 from cl.enterprise_python.core.schema.deep.deep_trade_key import DeepTradeKey
 
 

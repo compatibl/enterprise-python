@@ -13,7 +13,6 @@
 # limitations under the License.
 
 import mongoengine as me
-from cl.enterprise_python.core.schema.shallow.shallow_leg import ShallowLeg
 from cl.enterprise_python.core.schema.shallow.shallow_trade_key import ShallowTradeKey
 
 
