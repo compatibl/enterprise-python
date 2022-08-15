@@ -19,8 +19,15 @@ from cl.enterprise_python.core.schema.wide.wide_trade import WideTrade
 class WideSwap(WideTrade):  # Inherits from WideTrade that has attributes common to all trades
     """Remaining attributes of swap record."""
 
-    leg_type = me.ListField(me.StringField(max_length=50))
-    """List of leg types."""
+    leg_type_1 = me.StringField(max_length=50)
+    """Type of leg 1."""
 
-    leg_ccy = me.ListField(me.StringField(max_length=3))
-    """List of leg currencies."""
+    leg_type_2 = me.StringField(max_length=50)
+    """Type of leg 1."""
+
+    leg_ccy_1 = me.StringField(max_length=3)
+    """Currency of leg 2."""
+
+    leg_ccy_2 = me.StringField(max_length=3)
+    """Currency of leg 2."""
+
