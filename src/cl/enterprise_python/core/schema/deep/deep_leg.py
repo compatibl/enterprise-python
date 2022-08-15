@@ -12,14 +12,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from cl.enterprise_python.core.schema.deep.deep_swap_key import DeepSwapKey
+import mongoengine as me
 
 
-class DeepLeg:
+class DeepLeg(me.EmbeddedDocument):  # Must inherit from EmbeddedDocument rather than Document
     """Swap leg."""
 
-    leg_type: str = None
+    leg_type = me.StringField(max_length=50)
     """Leg type."""
 
-    leg_ccy: str = None
+    leg_ccy = me.StringField(max_length=3)
     """Leg currency."""

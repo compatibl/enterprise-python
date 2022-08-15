@@ -15,10 +15,10 @@
 import mongoengine as me
 
 
-class DeepSwapKey(me.Document):
+class DeepSwapKey(me.Document):  # Must inherit from Document
     """Primary key attributes of swap record."""
 
     meta = {'allow_inheritance': True}  # Permit inheritance of record classes to create class hierarchies
 
-    trade_id: str = None
-    """Unique trade identifier."""
+    trade_id = me.StringField(max_length=50)
+    """Unique trade identifier (primary key)."""
