@@ -39,25 +39,28 @@ class SaSimpleRecordTest:
 
             metadata = sa.MetaData()
             table = sa.Table('simple_record_mock', metadata,
-                             sa.Column('simple_id', sa.Integer()),
+                             sa.Column('simple_id', sa.String(255), nullable=False, primary_key=True),
                              sa.Column('string_element', sa.String(255), nullable=False),
                              )
             metadata.create_all(engine)  # Creates the table
 
             with Session(engine) as session:
+
+                # Create records
                 a_aa = SaSimpleRecordMock(simple_id="A", string_element="AA")
                 b_bb = SaSimpleRecordMock(simple_id="B", string_element="BB")
 
-                # Write the initial two objects and commit
+                # Write the records and commit
                 session.add_all([a_aa, b_bb])
                 session.commit()
 
-            with Session(engine) as session:
-                a_bb = SaSimpleRecordMock(simple_id="A", string_element="BB")
+            with pytest.raises(sa.exc.IntegrityError): # noqa
+                with Session(engine) as session:
 
-                # Update one of the object by writing another object with the same primary key
-                session.add_all([a_bb])
-                session.commit()
+                    # Update one of the object by writing another object with the same primary key
+                    a_bb = SaSimpleRecordMock(simple_id="A", string_element="BB")
+                    session.add_all([a_bb])
+                    session.commit()
 
         if False:
             # Remove DB file after test
