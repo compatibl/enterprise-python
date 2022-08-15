@@ -16,7 +16,7 @@ from attrs import define
 
 
 @define
-class SimpleRecordMockKey:
+class AttrsSimpleRecordMockKey:
     """Simple record key."""
 
     simple_id: str = None

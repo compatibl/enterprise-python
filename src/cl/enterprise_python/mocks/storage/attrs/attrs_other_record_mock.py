@@ -13,13 +13,13 @@
 # limitations under the License.
 
 from attrs import define
-from cl.enterprise_python.mocks.storage.other_record_mock_key import OtherRecordMockKey
-from cl.enterprise_python.mocks.storage.simple_record_mock_key import SimpleRecordMockKey
+from cl.enterprise_python.mocks.storage.attrs.attrs_other_record_mock_key import AttrsAttrsOtherRecordMockKey
+from cl.enterprise_python.mocks.storage.attrs.attrs_simple_record_mock_key import AttrsSimpleRecordMockKey
 
 
 @define
-class OtherRecordMock(OtherRecordMockKey):
+class AttrsOtherRecordMock(AttrsAttrsOtherRecordMockKey):
     """Record that contains a foreign key."""
 
-    foreign_key: SimpleRecordMockKey = None
-    """Foreign key to SimpleRecordMock table."""
+    foreign_key: AttrsSimpleRecordMockKey = None
+    """Foreign key to AttrsSimpleRecordMock table."""

@@ -16,7 +16,7 @@ from attrs import define
 
 
 @define
-class OtherRecordMockKey:
+class AttrsAttrsOtherRecordMockKey:
     """Key for a record that contains a foreign key."""
 
     other_id: str = None

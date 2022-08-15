@@ -16,7 +16,7 @@ from attrs import define
 
 
 @define
-class SimpleDataMock:
+class AttrsSimpleDataMock:
     """Simple data class."""
 
     bool_element: bool = None

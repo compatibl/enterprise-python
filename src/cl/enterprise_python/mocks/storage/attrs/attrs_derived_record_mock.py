@@ -14,13 +14,13 @@
 
 from attrs import define
 import datetime as dt
-from cl.enterprise_python.mocks.storage.simple_data_mock import SimpleDataMock
-from cl.enterprise_python.mocks.storage.simple_record_mock import SimpleRecordMock
+from cl.enterprise_python.mocks.storage.attrs.attrs_simple_data_mock import AttrsSimpleDataMock
+from cl.enterprise_python.mocks.storage.attrs.attrs_simple_record_mock import AttrsSimpleRecordMock
 
 
 @define
-class DerivedRecordMock(SimpleRecordMock):
-    """Record derived from SimpleRecordMock."""
+class AttrsDerivedRecordMock(AttrsSimpleRecordMock):
+    """Record derived from AttrsSimpleRecordMock."""
 
     float_element: float = None
     """Double element."""
@@ -28,5 +28,5 @@ class DerivedRecordMock(SimpleRecordMock):
     date_element: dt.date = None
     """DateTime element."""
 
-    data_element: SimpleDataMock = None
+    data_element: AttrsSimpleDataMock = None
     """Simple data element."""

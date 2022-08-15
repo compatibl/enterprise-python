@@ -13,12 +13,12 @@
 # limitations under the License.
 
 from attrs import define
-from cl.enterprise_python.mocks.storage.simple_data_mock import SimpleDataMock
+from cl.enterprise_python.mocks.storage.attrs.attrs_simple_data_mock import AttrsSimpleDataMock
 
 
 @define
-class DerivedDataMock(SimpleDataMock):
-    """Data class derived from SimpleDataMock."""
+class AttrsDerivedDataMock(AttrsSimpleDataMock):
+    """Data class derived from AttrsSimpleDataMock."""
 
     int_element: int = None
     """Int element."""

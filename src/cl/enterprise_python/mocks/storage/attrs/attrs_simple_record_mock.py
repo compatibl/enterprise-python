@@ -13,11 +13,11 @@
 # limitations under the License.
 
 from attrs import define
-from cl.enterprise_python.mocks.storage.simple_record_mock_key import SimpleRecordMockKey
+from cl.enterprise_python.mocks.storage.attrs.attrs_simple_record_mock_key import AttrsSimpleRecordMockKey
 
 
 @define
-class SimpleRecordMock(SimpleRecordMockKey):
+class AttrsSimpleRecordMock(AttrsSimpleRecordMockKey):
     """Simple record."""
 
     string_element: str = None
