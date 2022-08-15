@@ -45,8 +45,18 @@ class SaSimpleRecordTest:
             metadata.create_all(engine)  # Creates the table
 
             with Session(engine) as session:
-                obj_1 = SaSimpleRecordMock(simple_id="A", string_element="AA")
-                session.add_all([obj_1])
+                a_aa = SaSimpleRecordMock(simple_id="A", string_element="AA")
+                b_bb = SaSimpleRecordMock(simple_id="B", string_element="BB")
+
+                # Write the initial two objects and commit
+                session.add_all([a_aa, b_bb])
+                session.commit()
+
+            with Session(engine) as session:
+                a_bb = SaSimpleRecordMock(simple_id="A", string_element="BB")
+
+                # Update one of the object by writing another object with the same primary key
+                session.add_all([a_bb])
                 session.commit()
 
         if False:
