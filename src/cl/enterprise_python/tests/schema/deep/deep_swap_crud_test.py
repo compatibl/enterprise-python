@@ -17,7 +17,6 @@ import mongoengine as me
 
 from cl.enterprise_python.core.schema.deep.deep_leg import DeepLeg
 from cl.enterprise_python.core.schema.deep.deep_swap import DeepSwap
-from cl.enterprise_python.core.schema.deep.deep_swap_key import DeepSwapKey
 
 
 class DeepTest:
@@ -32,16 +31,25 @@ class DeepTest:
         db_name = "deep_test_write"
         me.connect(db_name)
 
-        # Create swap record
-        rec = DeepSwap(
-            trade_id="T1",
-            trade_type="Swap",
-            legs=[
-                DeepLeg(leg_type="Fixed", leg_ccy="USD"),
-                DeepLeg(leg_type="Floating", leg_ccy="EUR")
-            ]
-        )
-        rec.save()
+        ccy_list = ["USD", "GBP", "JPY", "NOK", "AUD"]
+        ccy_count = len(ccy_list)
+
+        # Create swap records
+        records = [
+            DeepSwap(
+                trade_id=f"T{i}",
+                trade_type="Swap",
+                legs=[
+                    DeepLeg(leg_type="Fixed", leg_ccy=ccy_list[i % ccy_count]),
+                    DeepLeg(leg_type="Floating", leg_ccy="EUR")
+                ]
+            )
+            for i in range(5)
+        ]
+
+        # TODO - use bulk insert
+        for record in records:
+            record.save()
 
 
 if __name__ == "__main__":
