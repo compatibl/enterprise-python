@@ -27,6 +27,9 @@ class ShallowCrudTest:
     Tests for ShallowSwap using MongoEngine ODM and deep style of embedding.
     """
 
+    _alias: str = "shallow"
+    """One connection per test."""
+
     def connect(self) -> Any:
         """
         Connect and return connection object.
@@ -35,11 +38,11 @@ class ShallowCrudTest:
         the connection so Any is used in annotation.
         """
         # Connect to the database using class name for the table
-        return me.connect(__name__)
+        return me.connect(self._alias, alias=self._alias)
 
     def clean_up(self, connection: Any) -> None:
         """Drop database to clean up before and after the test."""
-        connection.drop_database(__name__)
+        connection.drop_database(self._alias)
 
     def create_records(self) -> List[ShallowTrade]:
         """
@@ -50,8 +53,6 @@ class ShallowCrudTest:
         # Create a list of currencies to populate swap records
         ccy_list = ["USD", "GBP", "JPY", "NOK", "AUD"]
         ccy_count = len(ccy_list)
-        type_list = ["Fixed", "Floating"]
-        type_count = len(type_list)
 
         # Create swap records
         swaps = [
@@ -67,7 +68,6 @@ class ShallowCrudTest:
             ShallowBond(
                 trade_id=f"T{i+1}",
                 trade_type="Bond",
-                bond_type=type_list[i % type_count],
                 bond_ccy=ccy_list[i % ccy_count]
             )
             for i in range(2, 3)
@@ -103,7 +103,7 @@ class ShallowCrudTest:
             print(swap.trade_id)
 
         # Drop database to clean up after the test
-        # self.clean_up(connection)
+        self.clean_up(connection)
 
 
 if __name__ == "__main__":

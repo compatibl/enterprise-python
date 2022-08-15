@@ -18,7 +18,7 @@ import mongoengine as me
 class DeepTradeKey(me.Document):  # Must inherit from Document
     """Primary key attributes of trade record."""
 
-    meta = {'allow_inheritance': True}  # Permit inheritance of record classes to create class hierarchies
+    meta = {'db_alias': 'deep', 'allow_inheritance': True}  # Permit inheritance of record classes
 
     trade_id = me.StringField(max_length=50)
     """Unique trade identifier (primary key)."""
