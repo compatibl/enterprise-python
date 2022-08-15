@@ -12,13 +12,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import mongoengine as me
-from cl.enterprise_python.core.schema.rel.rel_leg import RelLeg
+
 from cl.enterprise_python.core.schema.rel.rel_trade import RelTrade
 
 
 class RelSwap(RelTrade):  # Inherits from RelTrade that has attributes common to all trades
     """Remaining attributes of swap record."""
 
-    legs = me.ListField(me.EmbeddedDocumentField(RelLeg))
-    """List of swap legs."""

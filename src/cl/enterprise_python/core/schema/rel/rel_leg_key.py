@@ -13,11 +13,15 @@
 # limitations under the License.
 
 from sqlalchemy import Column, String
-from cl.enterprise_python.core.schema.rel.rel_trade import RelTrade
+from sqlalchemy.orm import declarative_base
+
+Base = declarative_base()
 
 
-class RelBond(RelTrade):  # Inherits from RelTrade that has attributes common to all trades
-    """Remaining attributes of bond record."""
+class RelLegKey(Base):  # Must inherit from Base
+    """Primary key attributes of trade record."""
 
-    bond_ccy: str = Column(String)
-    """Bond currency."""
+    __tablename__ = "rel_leg"
+
+    leg_id: str = Column(String, primary_key=True)
+    """Unique trade identifier (primary key)."""

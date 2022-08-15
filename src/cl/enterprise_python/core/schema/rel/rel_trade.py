@@ -12,12 +12,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import mongoengine as me
+from sqlalchemy import Column, String
 from cl.enterprise_python.core.schema.rel.rel_trade_key import RelTradeKey
 
 
 class RelTrade(RelTradeKey):  # Inherits from RelTradeKey that has primary key attributes
     """Non-primary-key attributes common to all trades."""
 
-    trade_type = me.StringField(max_length=50)
+    trade_type: str = Column(String)
     """Trade type."""

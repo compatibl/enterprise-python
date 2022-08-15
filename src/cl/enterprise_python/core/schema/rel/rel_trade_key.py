@@ -12,13 +12,16 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import mongoengine as me
+from sqlalchemy import Column, String
+from sqlalchemy.orm import declarative_base
+
+Base = declarative_base()
 
 
-class RelTradeKey(me.Document):  # Must inherit from Document
+class RelTradeKey(Base):  # Must inherit from Base
     """Primary key attributes of trade record."""
 
-    meta = {'db_alias': 'rel', 'allow_inheritance': True}  # Permit inheritance of record classes
+    __tablename__ = "rel_trade"
 
-    trade_id = me.StringField(max_length=50)
+    trade_id: str = Column(String, primary_key=True)
     """Unique trade identifier (primary key)."""
