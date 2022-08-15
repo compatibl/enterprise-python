@@ -13,11 +13,16 @@
 # limitations under the License.
 
 from attrs import define
+from sqlalchemy import Column, String
+from sqlalchemy.orm import declarative_base
+
+Base = declarative_base()
 
 
-@define
-class SaSimpleRecordMockKey:
+class SaSimpleRecordMockKey(Base):
     """Simple record key."""
 
-    simple_id: str = None
+    __tablename__ = "simple_record_mock"
+
+    simple_id: str = Column(String, primary_key=True)
     """Primary key."""

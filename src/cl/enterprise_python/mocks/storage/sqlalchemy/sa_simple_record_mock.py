@@ -13,12 +13,13 @@
 # limitations under the License.
 
 from attrs import define
+from sqlalchemy import Column, String
+
 from cl.enterprise_python.mocks.storage.sqlalchemy.sa_simple_record_mock_key import SaSimpleRecordMockKey
 
 
-@define
 class SaSimpleRecordMock(SaSimpleRecordMockKey):
     """Simple record."""
 
-    string_element: str = None
+    string_element: str = Column(String, primary_key=False)
     """String element."""
