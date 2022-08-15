@@ -62,10 +62,9 @@ class SaSimpleRecordTest:
                     session.add_all([a_bb])
                     session.commit()
 
-        if False:
-            # Remove DB file after test
-            if os.path.exists(file_name_db):
-                os.remove(file_name_db)
+        # Remove DB file after test
+        if os.path.exists(file_name_db):
+            os.remove(file_name_db)
 
 
 if __name__ == "__main__":
