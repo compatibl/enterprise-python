@@ -95,6 +95,13 @@ class DeepCrudTest:
 
         # Retrieve all records
         print()
+        print("All trades")
+        for swap in DeepTrade.objects:
+            print(swap.trade_id)
+
+        # Retrieve only the swap records
+        print()
+        print("Swaps only")
         for swap in DeepSwap.objects:
             print(swap.trade_id)
 
