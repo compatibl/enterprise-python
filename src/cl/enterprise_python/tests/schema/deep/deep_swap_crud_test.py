@@ -19,17 +19,20 @@ from cl.enterprise_python.core.schema.deep.deep_leg import DeepLeg
 from cl.enterprise_python.core.schema.deep.deep_swap import DeepSwap
 
 
-class DeepTest:
+class DeepSwapTest:
     """
     Tests for DeepSwap using MongoEngine ODM and deep style of embedding.
     """
 
-    def test_write(self):
-        """Test writing."""
+    def test_crud(self):
+        """Test CRUD operations."""
 
         # Connect to the database
         db_name = "deep_test_write"
-        me.connect(db_name)
+        connection = me.connect(db_name)
+
+        # Drop database if exists so the test begins from scratch
+        connection.drop_database(db_name)
 
         ccy_list = ["USD", "GBP", "JPY", "NOK", "AUD"]
         ccy_count = len(ccy_list)
@@ -50,6 +53,13 @@ class DeepTest:
         # TODO - use bulk insert
         for record in records:
             record.save()
+
+        # Retrieve all records
+        for swap in DeepSwap.objects:
+            print(swap.trade_id)
+
+        # Drop database to clean up
+        connection.drop_database(db_name)
 
 
 if __name__ == "__main__":
