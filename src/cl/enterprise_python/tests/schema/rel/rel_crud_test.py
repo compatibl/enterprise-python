@@ -106,8 +106,8 @@ class RelCrudTest:
                              )
             leg_table = sa.Table('rel_leg', metadata,
                                    sa.Column('leg_id', sa.String(255), nullable=False, primary_key=True),
-                                   sa.Column('trade_id', sa.String(255), nullable=False,
-                                             foreign_key=sa.ForeignKey("rel_trade.trade_id")),
+                                   sa.Column('trade_id', sa.String(255), sa.ForeignKey("rel_trade.trade_id"),
+                                        nullable=False),
                                    sa.Column('leg_type', sa.String(255), nullable=True),
                                    sa.Column('leg_ccy', sa.String(255), nullable=True),
                                    )
