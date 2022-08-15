@@ -13,8 +13,6 @@
 # limitations under the License.
 
 import mongoengine as me
-from typing import List
-
 from cl.enterprise_python.core.schema.deep.deep_leg import DeepLeg
 from cl.enterprise_python.core.schema.deep.deep_swap_key import DeepSwapKey
 
