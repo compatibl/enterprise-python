@@ -19,8 +19,5 @@ from cl.enterprise_python.core.schema.deep.deep_trade import DeepTrade
 class DeepBond(DeepTrade):  # Inherits from DeepTrade that has attributes common to all trades
     """Remaining attributes of bond record."""
 
-    bond_type = me.StringField(max_length=50)
-    """Bond type."""
-
     bond_ccy = me.StringField(max_length=3)
     """Bond currency."""
