@@ -19,10 +19,10 @@ import sqlalchemy as sa
 from sqlalchemy.orm import Session
 from typing import List, Any, Tuple
 
-from cl.enterprise_python.core.schema.relational.rel_bond import RelBond
-from cl.enterprise_python.core.schema.relational.rel_leg import RelLeg
-from cl.enterprise_python.core.schema.relational.rel_swap import RelSwap
-from cl.enterprise_python.core.schema.relational.rel_trade import RelTrade
+from cl.enterprise_python.core.schema.relational.relational_bond import RelationalBond
+from cl.enterprise_python.core.schema.relational.relational_leg import RelationalLeg
+from cl.enterprise_python.core.schema.relational.relational_swap import RelationalSwap
+from cl.enterprise_python.core.schema.relational.relational_trade import RelationalTrade
 
 
 class RelCrudTest:
@@ -45,7 +45,7 @@ class RelCrudTest:
         if os.path.exists(self._db_file_name):
             os.remove(self._db_file_name)
 
-    def create_records(self) -> Tuple[List[RelTrade], List[RelLeg]]:
+    def create_records(self) -> Tuple[List[RelationalTrade], List[RelationalLeg]]:
         """
         Return a list of random records objects.
         This method does not write to the database.
@@ -57,14 +57,14 @@ class RelCrudTest:
 
         # Create swap records
         swaps = [
-            RelSwap(
+            RelationalSwap(
                 trade_id=f"T{i+1}",
                 trade_type="Swap"
             )
             for i in range(0, 2)
         ]
         bonds = [
-            RelBond(
+            RelationalBond(
                 trade_id=f"T{i+ 1}",
                 trade_type="Bond",
                 bond_ccy=ccy_list[i % ccy_count]
@@ -73,12 +73,12 @@ class RelCrudTest:
         ]
 
         fixed_legs = [
-            RelLeg(leg_id=f"L{i+1}1", trade_id=f"T{i+1}", leg_type="Fixed", leg_ccy=ccy_list[i % ccy_count])
+            RelationalLeg(leg_id=f"L{i+1}1", trade_id=f"T{i+1}", leg_type="Fixed", leg_ccy=ccy_list[i % ccy_count])
             for i in range(0, 2)
         ]
 
         floating_legs = [
-            RelLeg(leg_id=f"L{i+1}2",trade_id=f"T{i+ 1}", leg_type="Floating", leg_ccy="EUR")
+            RelationalLeg(leg_id=f"L{i+1}2",trade_id=f"T{i+ 1}", leg_type="Floating", leg_ccy="EUR")
             for i in range(0, 2)
         ]
 
