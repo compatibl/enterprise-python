@@ -13,10 +13,10 @@
 # limitations under the License.
 
 import mongoengine as me
-from cl.enterprise_python.core.schema.shallow.shallow_trade import ShallowTrade
+from cl.enterprise_python.core.schema.table.table_trade import TableTrade
 
 
-class ShallowBond(ShallowTrade):  # Inherits from ShallowTrade that has attributes common to all trades
+class TableBond(TableTrade):  # Inherits from TableTrade that has attributes common to all trades
     """Remaining attributes of bond record."""
 
     bond_ccy = me.StringField(max_length=3)

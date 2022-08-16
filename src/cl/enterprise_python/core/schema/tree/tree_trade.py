@@ -13,10 +13,10 @@
 # limitations under the License.
 
 import mongoengine as me
-from cl.enterprise_python.core.schema.deep.deep_trade_key import DeepTradeKey
+from cl.enterprise_python.core.schema.tree.tree_trade_key import TreeTradeKey
 
 
-class DeepTrade(DeepTradeKey):  # Inherits from DeepTradeKey that has primary key attributes
+class TreeTrade(TreeTradeKey):  # Inherits from TreeTradeKey that has primary key attributes
     """Non-primary-key attributes common to all trades."""
 
     trade_type = me.StringField(max_length=50)

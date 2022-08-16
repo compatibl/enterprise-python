@@ -17,14 +17,14 @@ import pytest
 import mongoengine as me
 from typing import List, Any
 
-from cl.enterprise_python.core.schema.shallow.shallow_bond import ShallowBond
-from cl.enterprise_python.core.schema.shallow.shallow_swap import ShallowSwap
-from cl.enterprise_python.core.schema.shallow.shallow_trade import ShallowTrade
+from cl.enterprise_python.core.schema.table.table_bond import TableBond
+from cl.enterprise_python.core.schema.table.table_swap import TableSwap
+from cl.enterprise_python.core.schema.table.table_trade import TableTrade
 
 
-class ShallowCrudTest:
+class TableCrudTest:
     """
-    Tests for ShallowSwap using MongoEngine ODM and deep style of embedding.
+    Tests for TableSwap using MongoEngine ODM and deep style of embedding.
     """
 
     _alias: str = "shallow"
@@ -44,7 +44,7 @@ class ShallowCrudTest:
         """Drop database to clean up before and after the test."""
         connection.drop_database(self._alias)
 
-    def create_records(self) -> List[ShallowTrade]:
+    def create_records(self) -> List[TableTrade]:
         """
         Return a list of random records objects.
         This method does not write to the database.
@@ -56,7 +56,7 @@ class ShallowCrudTest:
 
         # Create swap records
         swaps = [
-            ShallowSwap(
+            TableSwap(
                 trade_id=f"T{i+1}",
                 trade_type="Swap",
                 leg_type=["Fixed", "Floating"],
@@ -65,7 +65,7 @@ class ShallowCrudTest:
             for i in range(0, 2)
         ]
         bonds = [
-            ShallowBond(
+            TableBond(
                 trade_id=f"T{i+1}",
                 trade_type="Bond",
                 bond_ccy=ccy_list[i % ccy_count]
@@ -93,13 +93,13 @@ class ShallowCrudTest:
         # Retrieve all records
         print()
         print("All trades")
-        for swap in ShallowTrade.objects:
+        for swap in TableTrade.objects:
             print(swap.trade_id)
 
         # Retrieve only the swap records
         print()
         print("Swaps only")
-        for swap in ShallowSwap.objects:
+        for swap in TableSwap.objects:
             print(swap.trade_id)
 
         # Drop database to clean up after the test

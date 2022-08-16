@@ -15,7 +15,7 @@
 import mongoengine as me
 
 
-class ShallowTradeKey(me.Document):  # Must inherit from Document
+class TableTradeKey(me.Document):  # Must inherit from Document
     """Primary key attributes of trade record."""
 
     meta = {'db_alias': 'shallow', 'allow_inheritance': True}  # Permit inheritance of record classes

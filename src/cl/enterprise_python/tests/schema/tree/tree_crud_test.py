@@ -17,15 +17,15 @@ import pytest
 import mongoengine as me
 from typing import List, Any
 
-from cl.enterprise_python.core.schema.deep.deep_bond import DeepBond
-from cl.enterprise_python.core.schema.deep.deep_leg import DeepLeg
-from cl.enterprise_python.core.schema.deep.deep_swap import DeepSwap
-from cl.enterprise_python.core.schema.deep.deep_trade import DeepTrade
+from cl.enterprise_python.core.schema.tree.tree_bond import TreeBond
+from cl.enterprise_python.core.schema.tree.tree_leg import TreeLeg
+from cl.enterprise_python.core.schema.tree.tree_swap import TreeSwap
+from cl.enterprise_python.core.schema.tree.tree_trade import TreeTrade
 
 
-class DeepCrudTest:
+class TreeCrudTest:
     """
-    Tests for DeepSwap using MongoEngine ODM and deep style of embedding.
+    Tests for TreeSwap using MongoEngine ODM and deep style of embedding.
     """
 
     _alias: str = "deep"
@@ -44,7 +44,7 @@ class DeepCrudTest:
         """Drop database to clean up before and after the test."""
         connection.drop_database(self._alias)
 
-    def create_records(self) -> List[DeepTrade]:
+    def create_records(self) -> List[TreeTrade]:
         """
         Return a list of random records objects.
         This method does not write to the database.
@@ -56,18 +56,18 @@ class DeepCrudTest:
 
         # Create swap records
         swaps = [
-            DeepSwap(
+            TreeSwap(
                 trade_id=f"T{i+1}",
                 trade_type="Swap",
                 legs=[
-                    DeepLeg(leg_type="Fixed", leg_ccy=ccy_list[i % ccy_count]),
-                    DeepLeg(leg_type="Floating", leg_ccy="EUR")
+                    TreeLeg(leg_type="Fixed", leg_ccy=ccy_list[i % ccy_count]),
+                    TreeLeg(leg_type="Floating", leg_ccy="EUR")
                 ]
             )
             for i in range(0, 2)
         ]
         bonds = [
-            DeepBond(
+            TreeBond(
                 trade_id=f"T{i+1}",
                 trade_type="Bond",
                 bond_ccy=ccy_list[i % ccy_count]
@@ -95,13 +95,13 @@ class DeepCrudTest:
         # Retrieve all records
         print()
         print("All trades")
-        for swap in DeepTrade.objects:
+        for swap in TreeTrade.objects:
             print(swap.trade_id)
 
         # Retrieve only the swap records
         print()
         print("Swaps only")
-        for swap in DeepSwap.objects:
+        for swap in TreeSwap.objects:
             print(swap.trade_id)
 
         # Drop database to clean up after the test
