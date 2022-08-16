@@ -12,12 +12,19 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import sqlalchemy as sa
 from sqlalchemy import Column, String
-from cl.enterprise_python.core.schema.rel.rel_trade import RelTrade
+from cl.enterprise_python.core.schema.relational.rel_leg_key import RelLegKey
 
 
-class RelBond(RelTrade):  # Inherits from RelTrade that has attributes common to all trades
-    """Remaining attributes of bond record."""
+class RelLeg(RelLegKey):  # Inherits from RelLegKey that has primary key attributes
+    """Swap leg."""
 
-    bond_ccy: str = Column(String)
-    """Bond currency."""
+    trade_id: str = Column(String)
+    """Identifier of trade to which the leg belongs (foreign key)."""
+
+    leg_type: str = Column(String)
+    """Leg type."""
+
+    leg_ccy: str = Column(String)
+    """Leg currency."""

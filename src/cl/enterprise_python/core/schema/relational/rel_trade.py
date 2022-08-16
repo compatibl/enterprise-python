@@ -14,7 +14,7 @@
 
 from sqlalchemy import Column, String
 from sqlalchemy.orm import relationship
-from cl.enterprise_python.core.schema.rel.rel_trade_key import RelTradeKey
+from cl.enterprise_python.core.schema.relational.rel_trade_key import RelTradeKey
 
 
 class RelTrade(RelTradeKey):  # Inherits from RelTradeKey that has primary key attributes

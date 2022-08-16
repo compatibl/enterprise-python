@@ -19,10 +19,10 @@ import sqlalchemy as sa
 from sqlalchemy.orm import Session
 from typing import List, Any, Tuple
 
-from cl.enterprise_python.core.schema.rel.rel_bond import RelBond
-from cl.enterprise_python.core.schema.rel.rel_leg import RelLeg
-from cl.enterprise_python.core.schema.rel.rel_swap import RelSwap
-from cl.enterprise_python.core.schema.rel.rel_trade import RelTrade
+from cl.enterprise_python.core.schema.relational.rel_bond import RelBond
+from cl.enterprise_python.core.schema.relational.rel_leg import RelLeg
+from cl.enterprise_python.core.schema.relational.rel_swap import RelSwap
+from cl.enterprise_python.core.schema.relational.rel_trade import RelTrade
 
 
 class RelCrudTest:
