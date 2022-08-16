@@ -12,10 +12,17 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from sqlalchemy.orm import relationship
-from cl.enterprise_python.core.schema.relational.rel_trade import RelTrade
+import sqlalchemy as sa
+from sqlalchemy import Column, String
+from sqlalchemy.orm import declarative_base
+
+Base = declarative_base()
 
 
-class RelSwap(RelTrade):  # Inherits from RelTrade that has attributes common to all trades
-    """Remaining attributes of swap record."""
+class RelationalLegKey(Base):  # Must inherit from Base
+    """Primary key attributes of trade record."""
 
+    __tablename__ = "rel_leg"
+
+    leg_id: str = Column(String, primary_key=True)
+    """Unique trade identifier (primary key)."""

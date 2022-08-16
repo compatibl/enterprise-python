@@ -12,12 +12,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from sqlalchemy import Column, String
-from cl.enterprise_python.core.schema.relational.rel_trade import RelTrade
+from sqlalchemy.orm import relationship
+from cl.enterprise_python.core.schema.relational.relational_trade import RelationalTrade
 
 
-class RelBond(RelTrade):  # Inherits from RelTrade that has attributes common to all trades
-    """Remaining attributes of bond record."""
+class RelationalSwap(RelationalTrade):  # Inherits from RelTrade that has attributes common to all trades
+    """Remaining attributes of swap record."""
 
-    bond_ccy: str = Column(String)
-    """Bond currency."""

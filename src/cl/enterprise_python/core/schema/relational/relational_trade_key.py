@@ -13,13 +13,15 @@
 # limitations under the License.
 
 from sqlalchemy import Column, String
-from sqlalchemy.orm import relationship
-from cl.enterprise_python.core.schema.relational.rel_trade_key import RelTradeKey
+from sqlalchemy.orm import declarative_base
+
+Base = declarative_base()
 
 
-class RelTrade(RelTradeKey):  # Inherits from RelTradeKey that has primary key attributes
-    """Non-primary-key attributes common to all trades."""
+class RelationalTradeKey(Base):  # Must inherit from Base
+    """Primary key attributes of trade record."""
 
-    trade_type: str = Column(String)
-    """Trade type."""
+    __tablename__ = "rel_trade"
 
+    trade_id: str = Column(String, primary_key=True)
+    """Unique trade identifier (primary key)."""
