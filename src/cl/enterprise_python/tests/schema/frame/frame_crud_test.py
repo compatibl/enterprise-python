@@ -18,14 +18,14 @@ import approvaltests as at
 import mongoengine as me
 from pymongo import MongoClient
 from typing import List, Tuple
-from cl.enterprise_python.core.schema.table.table_bond import TableBond
-from cl.enterprise_python.core.schema.table.table_swap import TableSwap
-from cl.enterprise_python.core.schema.table.table_trade import TableTrade
+from cl.enterprise_python.core.schema.frame.frame_bond import FrameBond
+from cl.enterprise_python.core.schema.frame.frame_swap import FrameSwap
+from cl.enterprise_python.core.schema.frame.frame_trade import FrameTrade
 
 
-class TableCrudTest:
+class FrameCrudTest:
     """
-    Tests for TableSwap using MongoEngine ODM and deep style of embedding.
+    Tests for FrameSwap using MongoEngine ODM and deep style of embedding.
     """
 
     def set_up(self) -> Tuple[str, MongoClient]:
@@ -48,7 +48,7 @@ class TableCrudTest:
 
         connection.drop_database(connection_alias)
 
-    def create_records(self) -> List[TableTrade]:
+    def create_records(self) -> List[FrameTrade]:
         """
         Return a list of random records objects.
         This method does not write to the database.
@@ -60,7 +60,7 @@ class TableCrudTest:
 
         # Create swap records
         swaps = [
-            TableSwap(
+            FrameSwap(
                 trade_id=f"T{i+1}",
                 trade_type="Swap",
                 leg_type=["Fixed", "Floating"],
@@ -69,7 +69,7 @@ class TableCrudTest:
             for i in range(0, 2)
         ]
         bonds = [
-            TableBond(
+            FrameBond(
                 trade_id=f"T{i+1}",
                 trade_type="Bond",
                 bond_ccy=ccy_list[i % ccy_count]
@@ -89,23 +89,23 @@ class TableCrudTest:
 
         # Create records and insert them into the database
         records = self.create_records()
-        TableTrade.objects.insert(records)
+        FrameTrade.objects.insert(records)
 
         # Retrieve all trades
-        all_trades = TableTrade.objects.order_by('trade_id')
+        all_trades = FrameTrade.objects.order_by('trade_id')
         result += "All Trades:\n" + "".join(
             [f"    trade_id={trade.trade_id} trade_type={trade.trade_type}\n" for trade in all_trades]
         )
 
         # Retrieve all swaps but skip bonds
-        all_swaps = TableSwap.objects.order_by('trade_id')
+        all_swaps = FrameSwap.objects.order_by('trade_id')
         result += "All Swaps:\n" + "".join(
             [f"    trade_id={trade.trade_id} trade_type={trade.trade_type}\n" for trade in all_swaps]
         )
 
         # Retrieve swaps where fixed leg has GBP currency
-        gbp_fixed_leg_1_swaps = TableSwap.objects(leg_ccy__0="GBP", leg_type__0="Fixed").order_by('trade_id')
-        gbp_fixed_leg_2_swaps = TableSwap.objects(leg_ccy__1="GBP", leg_type__1="Fixed").order_by('trade_id')
+        gbp_fixed_leg_1_swaps = FrameSwap.objects(leg_ccy__0="GBP", leg_type__0="Fixed").order_by('trade_id')
+        gbp_fixed_leg_2_swaps = FrameSwap.objects(leg_ccy__1="GBP", leg_type__1="Fixed").order_by('trade_id')
         gbp_fixed_swaps = list(gbp_fixed_leg_1_swaps) + list(gbp_fixed_leg_2_swaps)
         result += "Swaps where fixed leg has GBP currency:\n" + "".join(
             [f"    trade_id={trade.trade_id} trade_type={trade.trade_type} "
@@ -115,7 +115,7 @@ class TableCrudTest:
         )
 
         # Retrieve swaps where any leg has GBP currency, uses select by any list element
-        gbp_swaps = TableSwap.objects(leg_ccy="GBP").order_by('trade_id')
+        gbp_swaps = FrameSwap.objects(leg_ccy="GBP").order_by('trade_id')
         result += "Swaps where any leg has GBP currency:\n" + "".join(
             [f"    trade_id={trade.trade_id} trade_type={trade.trade_type} "
              f"leg_type[0]={trade.leg_type[0]} leg_ccy[0]={trade.leg_ccy[0]} "

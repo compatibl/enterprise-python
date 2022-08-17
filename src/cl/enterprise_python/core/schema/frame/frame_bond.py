@@ -13,10 +13,10 @@
 # limitations under the License.
 
 import mongoengine as me
-from cl.enterprise_python.core.schema.table.table_trade import TableTrade
+from cl.enterprise_python.core.schema.frame.frame_trade import FrameTrade
 
 
-class TableBond(TableTrade):  # Inherits from TableTrade that has attributes common to all trades
+class FrameBond(FrameTrade):  # Inherits from FrameTrade that has attributes common to all trades
     """Remaining attributes of bond record."""
 
     bond_ccy = me.StringField(max_length=3)

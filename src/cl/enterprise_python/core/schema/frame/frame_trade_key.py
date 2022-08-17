@@ -15,7 +15,7 @@
 import mongoengine as me
 
 
-class TableTradeKey(me.Document):  # Must inherit from Document
+class FrameTradeKey(me.Document):  # Must inherit from Document
     """Primary key attributes of trade record."""
 
     meta = {'db_alias': 'table', 'allow_inheritance': True}  # Permit inheritance of record classes
