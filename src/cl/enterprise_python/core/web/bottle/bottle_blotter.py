@@ -28,7 +28,31 @@ api_url = "http://localhost:50301"
 def get_main_page():
     """Display trade blotter"""
     response = requests.post(api_url + "/query_trades")
-    return "Welcome to Bottle Trade Blotter!\n\n" + str(response.json())
+
+    page_and_table_header ="""<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>My Bottle Home</title>
+    <link rel="stylesheet" type="text/css" href="http://twitter.github.com/bootstrap/assets/css/bootstrap.css">
+</head>
+<body>
+    <h1>All trades</h1>
+    <div >My List A</div>
+       <ol>"""
+
+    table_rows = """<li>listA1</li>
+          <li>listA2</li>
+          <li>listA3</li>"""
+
+    page_and_table_footer="""
+       </ol>
+    </div>
+</body>
+</html>"""
+
+    # return "Welcome to Bottle Trade Blotter!\n\n" + str(response.json())
+    return f"{page_and_table_header}{table_rows}{page_and_table_footer}"
+
 
 
 if __name__ == "__main__":
