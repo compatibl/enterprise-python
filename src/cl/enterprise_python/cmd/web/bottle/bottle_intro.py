@@ -28,4 +28,4 @@ def get_root_page():
 if __name__ == "__main__":
 
     # Run the built-in server locally on the default http port 8080
-    bottle.run(host='localhost', port=9001, debug=True)
+    bottle.run(host='localhost', port=8080, debug=True)
