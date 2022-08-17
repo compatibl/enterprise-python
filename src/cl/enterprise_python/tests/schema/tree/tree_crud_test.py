@@ -88,7 +88,7 @@ class TreeCrudTest:
         connection_alias, connection = self.set_up()
 
         # Set up result string
-        result = str()
+        result = ""
 
         # Create records and insert them into the database
         records = self.create_records()
@@ -107,6 +107,7 @@ class TreeCrudTest:
         )
 
         # Retrieve swaps where fixed leg has GBP currency
+        # Here legs__0__leg_ccy is MongoEngine shortcut for legs[0].leg_ccy
         gbp_fixed_leg_1_swaps = TreeSwap.objects(legs__0__leg_ccy="GBP", legs__0__leg_type="Fixed").order_by('trade_id')
         gbp_fixed_leg_2_swaps = TreeSwap.objects(legs__1__leg_ccy="GBP", legs__1__leg_type="Fixed").order_by('trade_id')
         gbp_fixed_swaps = list(gbp_fixed_leg_1_swaps) + list(gbp_fixed_leg_2_swaps)
@@ -119,6 +120,7 @@ class TreeCrudTest:
 
         # Retrieve swaps where any leg has GBP currency, uses select by
         # the specific element name and value anywhere inside the document
+        # Here legs__leg_ccy is MongoEngine shortcut for legs[*].leg_ccy
         gbp_swaps = TreeSwap.objects(legs__leg_ccy="GBP").order_by('trade_id')
         result += "Swaps where any leg has GBP currency:\n" + "".join(
             [f"    trade_id={trade.trade_id} trade_type={trade.trade_type} "
