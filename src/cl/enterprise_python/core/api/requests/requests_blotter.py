@@ -17,6 +17,18 @@ import requests
 if __name__ == "__main__":
 
     # Execute fastapi_intro.py before running this code
-    api_url = "http://localhost:50301/trades"  # Port used by fastapi_blotter.py
-    response = requests.get(api_url)
-    print(response.json())
+
+    # Query all trades
+    api_url = "http://localhost:50301/query_trades"  # Port used by fastapi_blotter.py
+    trades = requests.post(api_url)
+    print(f"All trades: {trades.json()}")
+
+    # Query trades that have GBP for at least one leg
+    api_url = "http://localhost:50301/query_trades"  # Port used by fastapi_blotter.py
+    gbp_trades = requests.post(api_url, params={"leg_ccy": "GBP"})
+    print(f"Trades where leg_ccy=GBP for at least one leg: {gbp_trades.json()}")
+
+    # Get one specific trade
+    api_url = "http://localhost:50301/get_trade"  # Port used by fastapi_blotter.py
+    t3_trade = requests.post(api_url, params={"trade_id": "T3"})
+    print(f"Trade with trade_id=T3: {t3_trade.json()}")

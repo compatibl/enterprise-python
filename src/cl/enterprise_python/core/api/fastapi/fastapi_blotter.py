@@ -58,7 +58,7 @@ def get_root() -> str:
     return "Welcome to FastAPI Trade Blotter!"
 
 
-@app.get("/add_trades/{trade_count}")
+@app.post("/add_trades/{trade_count}")
 def add_trades(trade_count: int) -> str:
     """
     Create and add to DB the specified number of random swap records.
@@ -74,7 +74,7 @@ def add_trades(trade_count: int) -> str:
     return f"Success: Added {trade_count} trades. DB now has {total_count} trades."
 
 
-@app.get("/clear_trades")
+@app.post("/clear_trades")
 def clear_trades() -> str:
     """Clear all trades from the database."""
 
@@ -85,7 +85,7 @@ def clear_trades() -> str:
     return f"Success: {total_count} trades cleared from DB."
 
 
-@app.get("/get_trade/{trade_id}")
+@app.post("/get_trade")
 def get_trade(trade_id: str):
     """
     Retrieve from DB by trade_id and return the specified trade.
@@ -94,7 +94,7 @@ def get_trade(trade_id: str):
     return trade.to_json()
 
 
-@app.get("/query_trades")
+@app.post("/query_trades")
 def query_trades(leg_ccy: Optional[str] = None):
     """
     If leg_ccy is specified, return all trades where the currency for
