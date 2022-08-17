@@ -11,6 +11,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+import json
 
 import bottle
 import requests
@@ -27,9 +28,8 @@ api_url = "http://localhost:50301"
 @bottle.route('/')
 def get_main_page():
     """Display trade blotter"""
-    response = requests.post(api_url + "/query_trades")
 
-    page_and_table_header ="""<!DOCTYPE html>
+    page_and_table_header = """<!DOCTYPE html>
 <html lang="en">
 <head>
     <title>My Bottle Home</title>
@@ -40,17 +40,24 @@ def get_main_page():
     <div >My List A</div>
        <ol>"""
 
-    table_rows = """<li>listA1</li>
-          <li>listA2</li>
-          <li>listA3</li>"""
-
-    page_and_table_footer="""
-       </ol>
+    page_and_table_footer = """       </ol>
     </div>
 </body>
 </html>"""
 
-    # return "Welcome to Bottle Trade Blotter!\n\n" + str(response.json())
+    # Retrieve trades from REST API
+    trade_str_dict = requests.post(api_url + "/query_trades").json()
+    trade_str_list = trade_str_dict["trades"]
+    trades = [json.loads(trade_str) for trade_str in trade_str_list]
+
+    # Form table rows
+    trade_rows = [f"{trade['trade_id']}" for trade in trades]
+        #f"    trade_id={trade.trade_id} trade_type={trade.trade_type} "
+        #     f"leg_type[0]={trade.legs[0].leg_type} leg_ccy[0]={trade.legs[0].leg_ccy} "
+        #     f"leg_type[1]={trade.legs[1].leg_type} leg_ccy[1]={trade.legs[1].leg_ccy}\n"
+    table_rows = "\n".join([f"<li>{trade_row}</li>" for trade_row in trade_rows])
+
+    # Return complete page with header and footer
     return f"{page_and_table_header}{table_rows}{page_and_table_footer}"
 
 
