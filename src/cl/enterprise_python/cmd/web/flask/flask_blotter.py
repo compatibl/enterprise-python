@@ -12,20 +12,21 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import bottle
+import flask
+
+# Create a Flask app object
+app = flask.Flask(__name__)
 
 # Makes web app much more verbose for debugging
 # Should not be used in production
-bottle.debug(True)
 
 
 # Page that will be displayed when main web app URL is opened
-@bottle.route('/')
+@app.route("/")
 def get_root_page():
-    return "Welcome to Bottle!"
+    return "<p>Welcome to Flask Trade Blotter!</p>"
 
 
-if __name__ == "__main__":
-
-    # Run the built-in server locally on the default http port 8080
-    bottle.run(host='localhost', port=50100, debug=True)
+# Run the built-in server locally on the default http port 8080
+if __name__ == '__main__':
+    app.run(host='localhost', port=50201, debug=True)

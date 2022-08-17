@@ -22,10 +22,10 @@ bottle.debug(True)
 # Page that will be displayed when main web app URL is opened
 @bottle.route('/')
 def get_root_page():
-    return "Welcome to Bottle!"
+    return "Welcome to Bottle Trade Blotter!"
 
 
 if __name__ == "__main__":
 
     # Run the built-in server locally on the default http port 8080
-    bottle.run(host='localhost', port=50100, debug=True)
+    bottle.run(host='localhost', port=50101, debug=True)
