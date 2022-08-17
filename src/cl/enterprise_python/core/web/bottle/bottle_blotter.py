@@ -32,16 +32,16 @@ def get_main_page():
     page_and_table_header = """<!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>My Bottle Home</title>
+    <title>Bottle Trade Blotter</title>
     <link rel="stylesheet" type="text/css" href="http://twitter.github.com/bootstrap/assets/css/bootstrap.css">
 </head>
 <body>
-    <h1>All trades</h1>
-    <div >My List A</div>
-       <ol>"""
+    <h1>Bottle Trade Blotter</h1>
+    <h2>All trades</h2>
+       <table>
+          <tr><td>Trade</td><td>Ccy1</td><td>Ccy2</td></tr>"""
 
-    page_and_table_footer = """       </ol>
-    </div>
+    page_and_table_footer = """       </table>
 </body>
 </html>"""
 
@@ -51,15 +51,17 @@ def get_main_page():
     trades = [json.loads(trade_str) for trade_str in trade_str_list]
 
     # Form table rows
-    trade_rows = [f"{trade['trade_id']}" for trade in trades]
-        #f"    trade_id={trade.trade_id} trade_type={trade.trade_type} "
-        #     f"leg_type[0]={trade.legs[0].leg_type} leg_ccy[0]={trade.legs[0].leg_ccy} "
-        #     f"leg_type[1]={trade.legs[1].leg_type} leg_ccy[1]={trade.legs[1].leg_ccy}\n"
-    table_rows = "\n".join([f"<li>{trade_row}</li>" for trade_row in trade_rows])
+    trade_rows = [
+        f"<tr>"
+        f"<td>{trade['trade_id']}</td>"
+        f"<td>{trade['legs'][0]['leg_ccy']}</td>"
+        f"<td>{trade['legs'][1]['leg_ccy']}</td>"
+        f"</tr>"
+        for trade in trades]
+    table_rows = "\n".join(trade_rows)
 
     # Return complete page with header and footer
     return f"{page_and_table_header}{table_rows}{page_and_table_footer}"
-
 
 
 if __name__ == "__main__":
