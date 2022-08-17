@@ -25,7 +25,7 @@ api_url = "http://localhost:50301"
 
 # Page that will be displayed when main web app URL is opened
 @bottle.route('/')
-def get_blotter_page():
+def get_main_page():
     """Display trade blotter"""
     response = requests.get(api_url + "/trades")
     return "Welcome to Bottle Trade Blotter!\n\n" + str(response.json())

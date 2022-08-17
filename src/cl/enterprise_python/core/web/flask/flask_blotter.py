@@ -15,16 +15,20 @@
 import flask
 
 # Create a Flask app object
+import requests
+
 app = flask.Flask(__name__)
 
-# Makes web app much more verbose for debugging
-# Should not be used in production
+# Port used by fastapi_blotter.py
+api_url = "http://localhost:50301"
 
 
 # Page that will be displayed when main web app URL is opened
 @app.route("/")
-def get_root_page():
-    return "<p>Welcome to Flask Trade Blotter!</p>"
+def get_main_page():
+    """Display trade blotter"""
+    response = requests.get(api_url + "/trades")
+    return "Welcome to Bottle Trade Blotter!\n\n" + str(response.json())
 
 
 # Run the built-in server locally on the default http port 8080
