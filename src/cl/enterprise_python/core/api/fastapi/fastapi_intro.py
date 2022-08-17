@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from typing import Union
+from typing import Union, Optional
 
 import uvicorn
 from fastapi import FastAPI, HTTPException
@@ -25,9 +25,19 @@ def get_root():
     return "Welcome to FastAPI!"
 
 
-@app.get("/items/{item_id}")
-def read_item(item_id: int, q: Union[str, None] = None):
-    return {"item_id": item_id, "q": q}
+@app.get("/with_path_params/{path_param_1}/{path_param_2}")
+def get_trades(path_param_1: str, path_param_2: str):
+    return {"path_param_1": path_param_1, "path_param_2": path_param_2}
+
+
+@app.get("/with_get_params")
+def get_trades(get_param_1: str, get_param_2: str):
+    return {"get_param_1": get_param_1, "get_param_2": get_param_2}
+
+
+@app.get("/with_optional_params")
+def get_trades(required_str: str, optional_int: Optional[int] = None):
+    return {"required_str": required_str, "optional_int": optional_int}
 
 
 @app.get("/example_raising_exception")
