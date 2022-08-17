@@ -1,0 +1,4 @@
+All Trades:
+trade_id=T1 trade_type=Swap
+trade_id=T2 trade_type=Swap
+trade_id=T3 trade_type=Bond

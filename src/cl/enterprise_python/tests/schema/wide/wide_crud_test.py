@@ -14,8 +14,12 @@
 
 
 import pytest
+from _pytest.fixtures import FixtureRequest
 import mongoengine as me
-from typing import List, Any
+import approvaltests as at
+from typing import List, Any, Tuple
+
+from pymongo import MongoClient
 
 from cl.enterprise_python.core.schema.wide.wide_bond import WideBond
 from cl.enterprise_python.core.schema.wide.wide_swap import WideSwap
@@ -27,22 +31,27 @@ class WideCrudTest:
     Tests for WideSwap using MongoEngine ODM and deep style of embedding.
     """
 
-    _alias: str = "wide"
-    """One connection per test."""
+    def set_up(self, request: FixtureRequest) -> Tuple[str, MongoClient]:
+        """Set up a dedicated database for the test."""
 
-    def connect(self) -> Any:
-        """
-        Connect and return connection object.
+        # Use a unique connection alias per test method
+        # to enable multiple simultaneous connections
+        # when running multiple tests at the same time
+        connection_alias = "wide" # f"{__name__}_{request.node.name}"
 
-        MongoEngine provides no explicit type for
-        the connection so Any is used in annotation.
-        """
-        # Connect to the database using class name for the table
-        return me.connect(self._alias, alias=self._alias)
+        # Connect to the database using test-specific alias
+        connection = me.connect(connection_alias, alias=connection_alias)
 
-    def clean_up(self, connection: Any) -> None:
-        """Drop database to clean up before and after the test."""
-        connection.drop_database(self._alias)
+        # Delete (drop) the existing database if already exists
+        # to ensure the test starts from scratch
+        self.tear_down(connection_alias, connection)
+
+        return connection_alias, connection
+
+    def tear_down(self, connection_alias: str, connection: MongoClient) -> None:
+        """Drop database to clean up after the test."""
+
+        connection.drop_database(connection_alias)
 
     def create_records(self) -> List[WideTrade]:
         """
@@ -76,36 +85,31 @@ class WideCrudTest:
         ]
         return swaps + bonds
 
-    def test_crud(self):
+    def test_crud(self, request: FixtureRequest):
         """Test CRUD operations."""
 
-        # Connect and set connection parameters
-        connection = self.connect()
+        # Set up a new database for the rest
+        connection_alias, connection = self.set_up(request)
 
-        # Drop database in case it is left over from the previous test
-        self.clean_up(connection)
+        # Set up result string
+        result = ""
 
-        # Create swap records
+        # Create records and insert them into the database
         records = self.create_records()
+        WideTrade.objects.insert(records)
 
-        # TODO - use bulk insert
-        for record in records:
-            record.save()
+        # Retrieve all trades ordered by trade_id to avoid
+        # receiving records in random order
+        trades = WideTrade.objects.order_by('trade_id')
+        result += "All Trades:\n" + "".join(
+            [f"trade_id={trade.trade_id} trade_type={trade.trade_type}\n" for trade in trades]
+        )
 
-        # Retrieve all records
-        print()
-        print("All trades")
-        for trade in WideTrade.objects:
-            print(trade.trade_id)
+        # Verify result
+        at.verify(result)
 
-        # Retrieve only the swap records
-        print()
-        print("Swaps only")
-        for swap in WideSwap.objects:
-            print(swap.trade_id)
-
-        # Drop database to clean up after the test
-        self.clean_up(connection)
+        # Delete (drop) the database after the test
+        self.tear_down(connection_alias, connection)
 
 
 if __name__ == "__main__":
