@@ -12,12 +12,51 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from typing import Union
+from typing import Union, List
 
 import uvicorn
 from fastapi import FastAPI, HTTPException
 
+from cl.enterprise_python.core.schema.tree.tree_bond import TreeBond
+from cl.enterprise_python.core.schema.tree.tree_leg import TreeLeg
+from cl.enterprise_python.core.schema.tree.tree_swap import TreeSwap
+from cl.enterprise_python.core.schema.tree.tree_trade import TreeTrade
+
 app = FastAPI()
+
+
+def create_records() -> List[TreeTrade]:
+    """
+    Return a list of random records objects.
+    This method does not write to the database.
+    """
+
+    # Create a list of currencies to populate swap records
+    ccy_list = ["USD", "GBP", "JPY", "NOK", "AUD"]
+    ccy_count = len(ccy_list)
+
+    # Create swap records
+    swaps = [
+        TreeSwap(
+            trade_id=f"T{i + 1}",
+            trade_type="Swap",
+            legs=[
+                TreeLeg(leg_type="Fixed", leg_ccy=ccy_list[i % ccy_count]),
+                TreeLeg(leg_type="Floating", leg_ccy="EUR")
+            ]
+        )
+        for i in range(0, 2)
+    ]
+    bonds = [
+        TreeBond(
+            trade_id=f"T{i + 1}",
+            trade_type="Bond",
+            bond_ccy=ccy_list[i % ccy_count]
+        )
+        for i in range(2, 3)
+    ]
+    return swaps + bonds
+
 
 @app.get("/")
 def get_root():
@@ -25,9 +64,23 @@ def get_root():
     return "Welcome to FastAPI Trade Blotter!"
 
 
+@app.get("/create")
+def create_trades():
+    """Create sample trades."""
+    return "Done"
+
+
+@app.get("/clear")
+def clear_trades():
+    """Clear all trades."""
+    return "Done"
+
+
 @app.get("/trades")
 def read_item():
-    return {"trade_id": "T1"}
+    trades = create_records()
+    result = {"trades": [trade.to_json() for trade in trades]}
+    return result
 
 
 @app.get("/example_raising_exception")
