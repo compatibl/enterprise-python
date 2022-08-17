@@ -27,8 +27,8 @@ api_url = "http://localhost:50301"
 @app.route("/")
 def get_main_page():
     """Display trade blotter"""
-    response = requests.get(api_url + "/trades")
-    return "Welcome to Bottle Trade Blotter!\n\n" + str(response.json())
+    response = requests.post(api_url + "/query_trades")
+    return "Welcome to Flask Trade Blotter!\n\n" + str(response.json())
 
 
 # Run the built-in server locally on the default http port 8080

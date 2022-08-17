@@ -27,7 +27,7 @@ api_url = "http://localhost:50301"
 @bottle.route('/')
 def get_main_page():
     """Display trade blotter"""
-    response = requests.get(api_url + "/trades")
+    response = requests.post(api_url + "/query_trades")
     return "Welcome to Bottle Trade Blotter!\n\n" + str(response.json())
 
 
