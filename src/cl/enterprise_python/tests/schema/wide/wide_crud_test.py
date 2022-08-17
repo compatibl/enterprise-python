@@ -87,7 +87,7 @@ class WideCrudTest:
         connection_alias, connection = self.set_up()
 
         # Set up result string
-        result = ""
+        result = str()
 
         # Create records and insert them into the database
         records = self.create_records()
