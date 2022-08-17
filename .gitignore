@@ -6,6 +6,7 @@ syntax: glob
 **/venv
 *.idea
 *.pyd
+*.db
 
 # Using regexp syntax
 syntax: regexp
