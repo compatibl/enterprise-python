@@ -19,9 +19,9 @@ from fastapi import FastAPI, HTTPException
 
 app = FastAPI()
 
-
 @app.get("/")
 def get_root():
+    """This result is returned when you access the main URL."""
     return "Welcome to FastAPI Trade Blotter!"
 
 

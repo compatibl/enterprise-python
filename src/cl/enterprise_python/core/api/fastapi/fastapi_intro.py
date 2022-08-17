@@ -22,26 +22,34 @@ app = FastAPI()
 
 @app.get("/")
 def get_root():
+    """This function is invoked when you access the main URL."""
     return "Welcome to FastAPI!"
 
 
 @app.get("/with_path_params/{path_param_1}/{path_param_2}")
 def get_trades(path_param_1: str, path_param_2: str):
+    """
+    This function uses path parameters.
+
+    Path parameters are specified as part of the URL rather
+    than after ? in URL. They cannot be optional.
+    """
     return {"path_param_1": path_param_1, "path_param_2": path_param_2}
 
 
-@app.get("/with_get_params")
-def get_trades(get_param_1: str, get_param_2: str):
-    return {"get_param_1": get_param_1, "get_param_2": get_param_2}
+@app.get("/with_query_params/")
+def get_trades(required_query_param: str, optional_query_param: Optional[int] = None):
+    """
+    This function uses query parameters.
 
-
-@app.get("/with_optional_params")
-def get_trades(required_str: str, optional_int: Optional[int] = None):
-    return {"required_str": required_str, "optional_int": optional_int}
+    Query parameters are specified after ? and can be optional.
+    """
+    return {"required_query_param": required_query_param, "optional_query_param": optional_query_param}
 
 
 @app.get("/example_raising_exception")
 def example_raising_exception():
+    """This function raises an exception."""
     raise HTTPException(status_code=418, detail="Exception raised in FastAPI.")
 
 
