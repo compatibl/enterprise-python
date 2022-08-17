@@ -12,12 +12,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from typing import Union, List
-
+import mongoengine as me
+from typing import List
 import uvicorn
 from fastapi import FastAPI, HTTPException
-
-from cl.enterprise_python.core.schema.tree.tree_bond import TreeBond
 from cl.enterprise_python.core.schema.tree.tree_leg import TreeLeg
 from cl.enterprise_python.core.schema.tree.tree_swap import TreeSwap
 from cl.enterprise_python.core.schema.tree.tree_trade import TreeTrade
@@ -25,14 +23,13 @@ from cl.enterprise_python.core.schema.tree.tree_trade import TreeTrade
 app = FastAPI()
 
 
-def create_records() -> List[TreeTrade]:
+def create_trades(trade_count: int) -> List[TreeTrade]:
     """
-    Return a list of random records objects.
-    This method does not write to the database.
+    Create the specified number of random swap records.
     """
 
     # Create a list of currencies to populate swap records
-    ccy_list = ["USD", "GBP", "JPY", "NOK", "AUD"]
+    ccy_list = ["USD", "EUR", "GBP", "JPY", "NOK", "AUD", "CAD"]
     ccy_count = len(ccy_list)
 
     # Create swap records
@@ -42,20 +39,12 @@ def create_records() -> List[TreeTrade]:
             trade_type="Swap",
             legs=[
                 TreeLeg(leg_type="Fixed", leg_ccy=ccy_list[i % ccy_count]),
-                TreeLeg(leg_type="Floating", leg_ccy="EUR")
+                TreeLeg(leg_type="Floating", leg_ccy=ccy_list[(2*i) % ccy_count]),
             ]
         )
-        for i in range(0, 2)
+        for i in range(trade_count)
     ]
-    bonds = [
-        TreeBond(
-            trade_id=f"T{i + 1}",
-            trade_type="Bond",
-            bond_ccy=ccy_list[i % ccy_count]
-        )
-        for i in range(2, 3)
-    ]
-    return swaps + bonds
+    return swaps
 
 
 @app.get("/")
@@ -64,10 +53,23 @@ def get_root():
     return "Welcome to FastAPI Trade Blotter!"
 
 
-@app.get("/create")
-def create_trades():
-    """Create sample trades."""
-    return "Done"
+@app.get("/add_trades/{trade_count}")
+def add_trades(trade_count: int):
+    """
+    Create and add to DB the specified number of random swap records.
+    """
+
+    # Use connection alias specified in 'meta' attribute of the data types for the test
+    connection_alias = "tree"
+
+    # Connect to the database using test-specific alias
+    connection = me.connect(connection_alias, alias=connection_alias)
+
+    # Create records and insert them into the database
+    records = create_trades(trade_count)
+    TreeTrade.objects.insert(records)
+
+    return f"Success: Added {trade_count} trades."
 
 
 @app.get("/clear")
@@ -76,7 +78,7 @@ def clear_trades():
     return "Done"
 
 
-@app.get("/trades")
+@app.get("/book_trades")
 def read_item():
     trades = create_records()
     result = {"trades": [trade.to_json() for trade in trades]}
