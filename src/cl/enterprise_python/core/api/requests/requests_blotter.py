@@ -17,6 +17,6 @@ import requests
 if __name__ == "__main__":
 
     # Execute fastapi_intro.py before running this code
-    api_url = "http://localhost:50301/trades"  # Port used by fastapi_intro.py
+    api_url = "http://localhost:50301/trades"  # Port used by fastapi_blotter.py
     response = requests.get(api_url)
     print(response.json())

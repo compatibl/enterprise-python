@@ -13,16 +13,22 @@
 # limitations under the License.
 
 import bottle
+import requests
 
 # Makes web app much more verbose for debugging
 # Should not be used in production
 bottle.debug(True)
 
+# Port used by fastapi_blotter.py
+api_url = "http://localhost:50301"
+
 
 # Page that will be displayed when main web app URL is opened
 @bottle.route('/')
-def get_root_page():
-    return "Welcome to Bottle Trade Blotter!"
+def get_blotter_page():
+    """Display trade blotter"""
+    response = requests.get(api_url + "/trades")
+    return "Welcome to Bottle Trade Blotter!\n\n" + str(response.json())
 
 
 if __name__ == "__main__":
