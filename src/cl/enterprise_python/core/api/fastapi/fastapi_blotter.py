@@ -40,7 +40,7 @@ def create_trades(trade_count: int) -> List[TreeTrade]:
     # Create swap records
     swaps = [
         TreeSwap(
-            trade_id=f"T{i + 1}",
+            trade_id=f"T{(i + 1):03}",
             trade_type="Swap",
             legs=[
                 TreeLeg(leg_type="Fixed", leg_ccy=ccy_list[i % ccy_count]),
