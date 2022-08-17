@@ -22,7 +22,9 @@ from cl.enterprise_python.core.schema.tree.tree_trade import TreeTrade
 
 # Use connection alias specified in 'meta' attribute of the data types for the test
 connection_alias = "tree"
+connection = me.connect(connection_alias, alias=connection_alias)
 
+# Create FastAPI instance
 app = FastAPI()
 
 
@@ -62,9 +64,6 @@ def add_trades(trade_count: int) -> str:
     Create and add to DB the specified number of random swap records.
     """
 
-    # Connect to the database using test-specific alias
-    connection = me.connect(connection_alias, alias=connection_alias)
-
     # Create records and insert them into the database
     records = create_trades(trade_count)
     TreeTrade.objects.insert(records)
@@ -75,21 +74,9 @@ def add_trades(trade_count: int) -> str:
     return f"Success: Added {trade_count} trades. DB now has {total_count} trades."
 
 
-@app.get("/get_trade/{trade_id}")
-def get_trade(trade_id: str) -> Dict[str, str]:
-    """
-    Retrieve from DB by trade_id and return the specified trade.
-    """
-    trade = TreeTrade.objects(trade_id=trade_id).one()
-    return trade.to_json()
-
-
-@app.get("/clear")
+@app.get("/clear_trades")
 def clear_trades() -> str:
     """Clear all trades from the database."""
-
-    # Connect to the database using test-specific alias
-    connection = me.connect(connection_alias, alias=connection_alias)
 
     # Count the current number of trades
     total_count = TreeTrade.objects.count()
@@ -98,8 +85,17 @@ def clear_trades() -> str:
     return f"Success: {total_count} trades cleared from DB."
 
 
-@app.get("/book_trades")
-def query_trades(leg_ccy: Optional[str] = None) -> Dict[str, str]:
+@app.get("/get_trade/{trade_id}")
+def get_trade(trade_id: str):
+    """
+    Retrieve from DB by trade_id and return the specified trade.
+    """
+    trade = TreeTrade.objects(trade_id=trade_id)[0]
+    return trade.to_json()
+
+
+@app.get("/query_trades")
+def query_trades(leg_ccy: Optional[str] = None):
     """
     If leg_ccy is specified, return all trades where the currency for
     at least one of the legs is leg_ccy, otherwise return all trades.
