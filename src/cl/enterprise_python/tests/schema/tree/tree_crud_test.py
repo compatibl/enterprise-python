@@ -117,6 +117,16 @@ class TreeCrudTest:
              for trade in gbp_fixed_swaps]
         )
 
+        # Retrieve swaps where any leg has GBP currency, uses select by
+        # the specific element name and value anywhere inside the document
+        gbp_swaps = TreeSwap.objects(legs__leg_ccy="GBP").order_by('trade_id')
+        result += "Swaps where any leg has GBP currency:\n" + "".join(
+            [f"    trade_id={trade.trade_id} trade_type={trade.trade_type} "
+             f"leg_type[0]={trade.legs[0].leg_type} leg_ccy[0]={trade.legs[0].leg_ccy} "
+             f"leg_type[1]={trade.legs[1].leg_type} leg_ccy[1]={trade.legs[1].leg_ccy}\n"
+             for trade in gbp_swaps]
+        )
+
         # Verify result
         at.verify(result)
 
