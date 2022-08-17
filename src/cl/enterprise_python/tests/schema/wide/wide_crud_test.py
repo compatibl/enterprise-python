@@ -95,9 +95,15 @@ class WideCrudTest:
 
         # Retrieve all trades ordered by trade_id to avoid
         # receiving records in random order
-        trades = WideTrade.objects.order_by('trade_id')
+        all_trades = WideTrade.objects.order_by('trade_id')
         result += "All Trades:\n" + "".join(
-            [f"trade_id={trade.trade_id} trade_type={trade.trade_type}\n" for trade in trades]
+            [f"trade_id={trade.trade_id} trade_type={trade.trade_type}\n" for trade in all_trades]
+        )
+
+        # Retrieve only those trades that have type WideSwap
+        all_swaps = WideSwap.objects.order_by('trade_id')
+        result += "All Swaps:\n" + "".join(
+            [f"trade_id={trade.trade_id} trade_type={trade.trade_type}\n" for trade in all_swaps]
         )
 
         # Verify result
