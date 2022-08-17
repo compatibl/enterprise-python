@@ -69,7 +69,10 @@ def add_trades(trade_count: int):
     records = create_trades(trade_count)
     TreeTrade.objects.insert(records)
 
-    return f"Success: Added {trade_count} trades."
+    # Count the current number of trades
+    total_count = TreeTrade.objects.count()
+
+    return f"Success: Added {trade_count} trades. DB now has {total_count} trades."
 
 
 @app.get("/clear")
