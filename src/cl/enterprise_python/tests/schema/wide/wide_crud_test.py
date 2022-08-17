@@ -14,13 +14,10 @@
 
 
 import pytest
-from _pytest.fixtures import FixtureRequest
 import mongoengine as me
-import approvaltests as at
-from typing import List, Any, Tuple
-
 from pymongo import MongoClient
-
+import approvaltests as at
+from typing import List, Tuple
 from cl.enterprise_python.core.schema.wide.wide_bond import WideBond
 from cl.enterprise_python.core.schema.wide.wide_swap import WideSwap
 from cl.enterprise_python.core.schema.wide.wide_trade import WideTrade
@@ -31,13 +28,11 @@ class WideCrudTest:
     Tests for WideSwap using MongoEngine ODM and deep style of embedding.
     """
 
-    def set_up(self, request: FixtureRequest) -> Tuple[str, MongoClient]:
+    def set_up(self) -> Tuple[str, MongoClient]:
         """Set up a dedicated database for the test."""
 
-        # Use a unique connection alias per test method
-        # to enable multiple simultaneous connections
-        # when running multiple tests at the same time
-        connection_alias = "wide" # f"{__name__}_{request.node.name}"
+        # Use connection alias specified in 'meta' attribute of the data types for the test
+        connection_alias = "wide"
 
         # Connect to the database using test-specific alias
         connection = me.connect(connection_alias, alias=connection_alias)
@@ -85,11 +80,11 @@ class WideCrudTest:
         ]
         return swaps + bonds
 
-    def test_crud(self, request: FixtureRequest):
+    def test_crud(self):
         """Test CRUD operations."""
 
         # Set up a new database for the rest
-        connection_alias, connection = self.set_up(request)
+        connection_alias, connection = self.set_up()
 
         # Set up result string
         result = ""
