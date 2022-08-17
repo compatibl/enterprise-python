@@ -22,12 +22,12 @@ app = FastAPI()
 
 @app.get("/")
 def get_root():
-    return "Welcome to FastAPI!"
+    return "Welcome to FastAPI Trade Blotter!"
 
 
-@app.get("/items/{item_id}")
-def read_item(item_id: int, q: Union[str, None] = None):
-    return {"item_id": item_id, "q": q}
+@app.get("/trades")
+def read_item():
+    return {"trade_id": "T1"}
 
 
 @app.get("/example_raising_exception")
@@ -36,4 +36,4 @@ def example_raising_exception():
 
 
 if __name__ == "__main__":
-    uvicorn.run(app, host="localhost", port=50300)
+    uvicorn.run(app, host="localhost", port=50301)
