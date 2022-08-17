@@ -13,10 +13,10 @@
 # limitations under the License.
 
 from typing import Union, Optional
-
 import uvicorn
 from fastapi import FastAPI, HTTPException
 
+# Create FastAPI class instance
 app = FastAPI()
 
 

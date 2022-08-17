@@ -30,5 +30,5 @@ if __name__ == "__main__":
 
     # Get one specific trade
     api_url = "http://localhost:50301/get_trade"  # Port used by fastapi_blotter.py
-    t3_trade = requests.post(api_url, params={"trade_id": "T3"})
+    t3_trade = requests.post(api_url, params={"trade_id": "T003"})
     print(f"Trade with trade_id=T3: {t3_trade.json()}")
