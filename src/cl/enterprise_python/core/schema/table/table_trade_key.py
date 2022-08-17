@@ -18,7 +18,7 @@ import mongoengine as me
 class TableTradeKey(me.Document):  # Must inherit from Document
     """Primary key attributes of trade record."""
 
-    meta = {'db_alias': 'shallow', 'allow_inheritance': True}  # Permit inheritance of record classes
+    meta = {'db_alias': 'table', 'allow_inheritance': True}  # Permit inheritance of record classes
 
     trade_id = me.StringField(max_length=50)
     """Unique trade identifier (primary key)."""
