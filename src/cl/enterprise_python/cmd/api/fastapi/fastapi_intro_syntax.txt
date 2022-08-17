@@ -1,2 +1,7 @@
-http://127.0.0.1:8000/items/5?q=somequery
-http://127.0.0.1:8000/docs
+# API
+http://localhost:8000/
+http://localhost:8000/items/5?q=somequery
+http://localhost:8000/example_raising_exception
+
+# Docs
+http://localhost:8000/docs

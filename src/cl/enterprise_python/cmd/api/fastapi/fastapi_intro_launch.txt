@@ -1,1 +1,1 @@
-uvicorn cl.enterprise_python.tests.services.fastapi.main:app --reload
+uvicorn cl.enterprise_python.cmd.api.fastapi.fastapi_intro:app --reload
