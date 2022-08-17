@@ -1,7 +1,9 @@
 All Trades:
-trade_id=T1 trade_type=Swap
-trade_id=T2 trade_type=Swap
-trade_id=T3 trade_type=Bond
+    trade_id=T1 trade_type=Swap
+    trade_id=T2 trade_type=Swap
+    trade_id=T3 trade_type=Bond
 All Swaps:
-trade_id=T1 trade_type=Swap
-trade_id=T2 trade_type=Swap
+    trade_id=T1 trade_type=Swap
+    trade_id=T2 trade_type=Swap
+Swaps where fixed leg has GBP currency:
+    trade_id=T2 trade_type=Swap leg_type_1=Fixed leg_ccy_1=GBP leg_type_2=Floating leg_ccy_2=EUR

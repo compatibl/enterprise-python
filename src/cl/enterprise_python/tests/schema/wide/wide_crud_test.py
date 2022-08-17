@@ -97,13 +97,25 @@ class WideCrudTest:
         # receiving records in random order
         all_trades = WideTrade.objects.order_by('trade_id')
         result += "All Trades:\n" + "".join(
-            [f"trade_id={trade.trade_id} trade_type={trade.trade_type}\n" for trade in all_trades]
+            [f"    trade_id={trade.trade_id} trade_type={trade.trade_type}\n" for trade in all_trades]
         )
 
         # Retrieve only those trades that have type WideSwap
         all_swaps = WideSwap.objects.order_by('trade_id')
         result += "All Swaps:\n" + "".join(
-            [f"trade_id={trade.trade_id} trade_type={trade.trade_type}\n" for trade in all_swaps]
+            [f"    trade_id={trade.trade_id} trade_type={trade.trade_type}\n" for trade in all_swaps]
+        )
+
+        # Retrieve only those trades that have type WideSwap
+        # and have GBP as one of the currencies
+        gbp_fixed_leg_1_swaps = WideSwap.objects(leg_ccy_1="GBP", leg_type_1="Fixed").order_by('trade_id')
+        gbp_fixed_leg_2_swaps = WideSwap.objects(leg_ccy_2="GBP", leg_type_2="Fixed").order_by('trade_id')
+        gbp_fixed = list(gbp_fixed_leg_1_swaps) + list(gbp_fixed_leg_2_swaps)
+        result += "Swaps where fixed leg has GBP currency:\n" + "".join(
+            [f"    trade_id={trade.trade_id} trade_type={trade.trade_type} "
+             f"leg_type_1={trade.leg_type_1} leg_ccy_1={trade.leg_ccy_1} "
+             f"leg_type_2={trade.leg_type_2} leg_ccy_2={trade.leg_ccy_2}\n"
+             for trade in gbp_fixed]
         )
 
         # Verify result
