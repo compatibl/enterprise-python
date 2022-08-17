@@ -107,9 +107,9 @@ class WideCrudTest:
         )
 
         # Retrieve only those trades that have type WideSwap
-        # and have GBP as one of the currencies
-        gbp_fixed_leg_1_swaps = WideSwap.objects(leg_ccy_1="GBP", leg_type_1="Fixed").order_by('trade_id')
-        gbp_fixed_leg_2_swaps = WideSwap.objects(leg_ccy_2="GBP", leg_type_2="Fixed").order_by('trade_id')
+        # and have GBP as fixed leg currency
+        gbp_fixed_leg_1_swaps = WideSwap.objects(leg_type_1="Fixed", leg_ccy_1="GBP").order_by('trade_id')
+        gbp_fixed_leg_2_swaps = WideSwap.objects(leg_type_2="Fixed", leg_ccy_2="GBP").order_by('trade_id')
         gbp_fixed = list(gbp_fixed_leg_1_swaps) + list(gbp_fixed_leg_2_swaps)
         result += "Swaps where fixed leg has GBP currency:\n" + "".join(
             [f"    trade_id={trade.trade_id} trade_type={trade.trade_type} "
