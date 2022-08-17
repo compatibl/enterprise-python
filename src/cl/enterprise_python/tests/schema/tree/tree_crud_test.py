@@ -14,9 +14,10 @@
 
 
 import pytest
+import approvaltests as at
 import mongoengine as me
-from typing import List, Any
-
+from pymongo import MongoClient
+from typing import List, Tuple
 from cl.enterprise_python.core.schema.tree.tree_bond import TreeBond
 from cl.enterprise_python.core.schema.tree.tree_leg import TreeLeg
 from cl.enterprise_python.core.schema.tree.tree_swap import TreeSwap
@@ -28,21 +29,25 @@ class TreeCrudTest:
     Tests for TreeSwap using MongoEngine ODM and deep style of embedding.
     """
 
-    _alias: str = "deep"
+    def set_up(self) -> Tuple[str, MongoClient]:
+        """Set up a dedicated database for the test."""
 
-    def connect(self) -> Any:
-        """
-        Connect and return connection object.
+        # Use connection alias specified in 'meta' attribute of the data types for the test
+        connection_alias = "tree"
 
-        MongoEngine provides no explicit type for
-        the connection so Any is used in annotation.
-        """
-        # Connect to the database using class name for the table
-        return me.connect(self._alias, alias=self._alias)
+        # Connect to the database using test-specific alias
+        connection = me.connect(connection_alias, alias=connection_alias)
 
-    def clean_up(self, connection: Any) -> None:
-        """Drop database to clean up before and after the test."""
-        connection.drop_database(self._alias)
+        # Delete (drop) the existing database if already exists
+        # to ensure the test starts from scratch
+        self.tear_down(connection_alias, connection)
+
+        return connection_alias, connection
+
+    def tear_down(self, connection_alias: str, connection: MongoClient) -> None:
+        """Drop database to clean up after the test."""
+
+        connection.drop_database(connection_alias)
 
     def create_records(self) -> List[TreeTrade]:
         """
@@ -79,33 +84,44 @@ class TreeCrudTest:
     def test_crud(self):
         """Test CRUD operations."""
 
-        # Connect and set connection parameters
-        connection = self.connect()
+        # Set up a new database for the rest
+        connection_alias, connection = self.set_up()
 
-        # Drop database in case it is left over from the previous test
-        self.clean_up(connection)
+        # Set up result string
+        result = str()
 
-        # Create swap records
+        # Create records and insert them into the database
         records = self.create_records()
+        TreeTrade.objects.insert(records)
 
-        # TODO - use bulk insert
-        for record in records:
-            record.save()
+        # Retrieve all trades
+        all_trades = TreeTrade.objects.order_by('trade_id')
+        result += "All Trades:\n" + "".join(
+            [f"    trade_id={trade.trade_id} trade_type={trade.trade_type}\n" for trade in all_trades]
+        )
 
-        # Retrieve all records
-        print()
-        print("All trades")
-        for swap in TreeTrade.objects:
-            print(swap.trade_id)
+        # Retrieve all swaps but skip bonds
+        all_swaps = TreeSwap.objects.order_by('trade_id')
+        result += "All Swaps:\n" + "".join(
+            [f"    trade_id={trade.trade_id} trade_type={trade.trade_type}\n" for trade in all_swaps]
+        )
 
-        # Retrieve only the swap records
-        print()
-        print("Swaps only")
-        for swap in TreeSwap.objects:
-            print(swap.trade_id)
+        # Retrieve swaps where fixed leg has GBP currency
+        gbp_fixed_leg_1_swaps = TreeSwap.objects(legs__0__leg_ccy="GBP", legs__0__leg_type="Fixed").order_by('trade_id')
+        gbp_fixed_leg_2_swaps = TreeSwap.objects(legs__1__leg_ccy="GBP", legs__1__leg_type="Fixed").order_by('trade_id')
+        gbp_fixed_swaps = list(gbp_fixed_leg_1_swaps) + list(gbp_fixed_leg_2_swaps)
+        result += "Swaps where fixed leg has GBP currency:\n" + "".join(
+            [f"    trade_id={trade.trade_id} trade_type={trade.trade_type} "
+             f"leg_type[0]={trade.legs[0].leg_type} leg_ccy[0]={trade.legs[0].leg_ccy} "
+             f"leg_type[1]={trade.legs[1].leg_type} leg_ccy[1]={trade.legs[1].leg_ccy}\n"
+             for trade in gbp_fixed_swaps]
+        )
 
-        # Drop database to clean up after the test
-        self.clean_up(connection)
+        # Verify result
+        at.verify(result)
+
+        # Delete (drop) the database after the test
+        self.tear_down(connection_alias, connection)
 
 
 if __name__ == "__main__":
