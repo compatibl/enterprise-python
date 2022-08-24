@@ -11,13 +11,12 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+
 import json
-
 import flask
-
-# Create a Flask app object
 import requests
 
+# Create a Flask app object
 app = flask.Flask(__name__)
 
 # Port used by fastapi_blotter.py
