@@ -140,6 +140,10 @@ class TreeCrudTest:
              for trade in gbp_fixed_swaps]
         )
 
+        # Further study - for MongoDB and certain other databases, wildcard queries
+        # can be used to simultaneously query for GBP currency in both legs when this
+        # data format is used. These advanced queries are outside the scope of this course.
+
         # Verify result
         at.verify(result)
 
