@@ -96,37 +96,48 @@ class TreeCrudTest:
 
         # Retrieve all trades
         all_trades = TreeTrade.objects.order_by('trade_id')
+
+        # Add the result to approvaltests file
         result += "All Trades:\n" + "".join(
             [f"    trade_id={trade.trade_id} trade_type={trade.trade_type}\n" for trade in all_trades]
         )
 
         # Retrieve all swaps but skip bonds
         all_swaps = TreeSwap.objects.order_by('trade_id')
+
+        # Add the result to approvaltests file
         result += "All Swaps:\n" + "".join(
             [f"    trade_id={trade.trade_id} trade_type={trade.trade_type}\n" for trade in all_swaps]
         )
 
-        # Retrieve swaps where fixed leg has GBP currency
-        # Here legs__0__leg_ccy is MongoEngine shortcut for legs[0].leg_ccy
+        # The objective is to retrieve only those trades that have type WideSwap
+        # and have GBP currency for the fixed leg. Having GBP currency for the
+        # floating leg does not count.
+
+        # This Iterable includes trades where leg 1 has type=Fixed and ccy=GBP
+        # We use legs__0__leg_ccy parameter which is MongoEngine shortcut for
+        # legs[0].leg_ccy (leg_ccy attribute of the element of the Legs array
+        # with index 0)
         gbp_fixed_leg_1_swaps = TreeSwap.objects(legs__0__leg_ccy="GBP", legs__0__leg_type="Fixed").order_by('trade_id')
+
+        # This Iterable includes trades where leg 2 has type=Fixed and ccy=GBP
+        # We use legs__1__leg_ccy parameter which is MongoEngine shortcut for
+        # legs[1].leg_ccy (leg_ccy attribute of the element of the Legs array
+        # with index 1)
         gbp_fixed_leg_2_swaps = TreeSwap.objects(legs__1__leg_ccy="GBP", legs__1__leg_type="Fixed").order_by('trade_id')
+
+        # This list combines items in both Iterables. For the purposes of this
+        # exercise, we will assume that each swap has one Fixed leg and one
+        # Floating leg (most of the swaps traded in the market are like that),
+        # so we do not need to eliminate duplicates.
         gbp_fixed_swaps = list(gbp_fixed_leg_1_swaps) + list(gbp_fixed_leg_2_swaps)
+
+        # Add the result to approvaltests file
         result += "Swaps where fixed leg has GBP currency:\n" + "".join(
             [f"    trade_id={trade.trade_id} trade_type={trade.trade_type} "
              f"leg_type[0]={trade.legs[0].leg_type} leg_ccy[0]={trade.legs[0].leg_ccy} "
              f"leg_type[1]={trade.legs[1].leg_type} leg_ccy[1]={trade.legs[1].leg_ccy}\n"
              for trade in gbp_fixed_swaps]
-        )
-
-        # Retrieve swaps where any leg has GBP currency, uses select by
-        # the specific element name and value anywhere inside the document
-        # Here legs__leg_ccy is MongoEngine shortcut for legs[*].leg_ccy
-        gbp_swaps = TreeSwap.objects(legs__leg_ccy="GBP").order_by('trade_id')
-        result += "Swaps where any leg has GBP currency:\n" + "".join(
-            [f"    trade_id={trade.trade_id} trade_type={trade.trade_type} "
-             f"leg_type[0]={trade.legs[0].leg_type} leg_ccy[0]={trade.legs[0].leg_ccy} "
-             f"leg_type[1]={trade.legs[1].leg_type} leg_ccy[1]={trade.legs[1].leg_ccy}\n"
-             for trade in gbp_swaps]
         )
 
         # Verify result
