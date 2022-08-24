@@ -16,7 +16,9 @@ import mongoengine as me
 from cl.enterprise_python.core.schema.frame.frame_trade_key import FrameTradeKey
 
 
-class FrameTrade(FrameTradeKey):  # Inherits from FrameTradeKey that has primary key attributes
+class FrameTrade(
+    FrameTradeKey
+):  # Inherits from FrameTradeKey that has primary key attributes
     """Non-primary-key attributes common to all trades."""
 
     trade_type = me.StringField(max_length=50)

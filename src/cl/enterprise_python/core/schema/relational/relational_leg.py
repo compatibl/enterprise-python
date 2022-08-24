@@ -14,10 +14,14 @@
 
 import sqlalchemy as sa
 from sqlalchemy import Column, String
-from cl.enterprise_python.core.schema.relational.relational_leg_key import RelationalLegKey
+from cl.enterprise_python.core.schema.relational.relational_leg_key import (
+    RelationalLegKey,
+)
 
 
-class RelationalLeg(RelationalLegKey):  # Inherits from RelLegKey that has primary key attributes
+class RelationalLeg(
+    RelationalLegKey
+):  # Inherits from RelLegKey that has primary key attributes
     """Swap leg."""
 
     trade_id: str = Column(String)

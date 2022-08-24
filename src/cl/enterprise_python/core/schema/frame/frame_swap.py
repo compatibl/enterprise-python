@@ -16,7 +16,9 @@ import mongoengine as me
 from cl.enterprise_python.core.schema.frame.frame_trade import FrameTrade
 
 
-class FrameSwap(FrameTrade):  # Inherits from FrameTrade that has attributes common to all trades
+class FrameSwap(
+    FrameTrade
+):  # Inherits from FrameTrade that has attributes common to all trades
     """Remaining attributes of swap record."""
 
     leg_type = me.ListField(me.StringField(max_length=50))

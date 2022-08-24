@@ -16,7 +16,9 @@ import mongoengine as me
 from cl.enterprise_python.core.schema.frame.frame_trade import FrameTrade
 
 
-class FrameBond(FrameTrade):  # Inherits from FrameTrade that has attributes common to all trades
+class FrameBond(
+    FrameTrade
+):  # Inherits from FrameTrade that has attributes common to all trades
     """Remaining attributes of bond record."""
 
     bond_ccy = me.StringField(max_length=3)

@@ -13,8 +13,12 @@
 # limitations under the License.
 
 from attrs import define
-from cl.enterprise_python.mocks.storage.attrs.attrs_other_record_mock_key import AttrsAttrsOtherRecordMockKey
-from cl.enterprise_python.mocks.storage.attrs.attrs_simple_record_mock_key import AttrsSimpleRecordMockKey
+from cl.enterprise_python.mocks.storage.attrs.attrs_other_record_mock_key import (
+    AttrsAttrsOtherRecordMockKey,
+)
+from cl.enterprise_python.mocks.storage.attrs.attrs_simple_record_mock_key import (
+    AttrsSimpleRecordMockKey,
+)
 
 
 @define

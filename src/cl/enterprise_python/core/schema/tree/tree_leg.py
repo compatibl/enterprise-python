@@ -15,7 +15,9 @@
 import mongoengine as me
 
 
-class TreeLeg(me.EmbeddedDocument):  # Must inherit from EmbeddedDocument rather than Document
+class TreeLeg(
+    me.EmbeddedDocument
+):  # Must inherit from EmbeddedDocument rather than Document
     """Swap leg."""
 
     leg_type = me.StringField(max_length=50)

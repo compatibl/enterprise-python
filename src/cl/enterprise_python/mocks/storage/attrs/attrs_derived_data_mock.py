@@ -13,7 +13,9 @@
 # limitations under the License.
 
 from attrs import define
-from cl.enterprise_python.mocks.storage.attrs.attrs_simple_data_mock import AttrsSimpleDataMock
+from cl.enterprise_python.mocks.storage.attrs.attrs_simple_data_mock import (
+    AttrsSimpleDataMock,
+)
 
 
 @define

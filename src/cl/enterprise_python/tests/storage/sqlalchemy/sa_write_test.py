@@ -16,7 +16,9 @@ import pytest
 import os
 import sqlalchemy as sa
 from sqlalchemy.orm import Session
-from cl.enterprise_python.mocks.storage.sqlalchemy.sa_simple_record_mock import SaSimpleRecordMock
+from cl.enterprise_python.mocks.storage.sqlalchemy.sa_simple_record_mock import (
+    SaSimpleRecordMock,
+)
 
 
 class SaSimpleRecordTest:
@@ -38,10 +40,14 @@ class SaSimpleRecordTest:
         with engine.connect() as connection:
 
             metadata = sa.MetaData()
-            table = sa.Table('simple_record_mock', metadata,
-                             sa.Column('simple_id', sa.String(255), nullable=False, primary_key=True),
-                             sa.Column('string_element', sa.String(255), nullable=False),
-                             )
+            table = sa.Table(
+                "simple_record_mock",
+                metadata,
+                sa.Column(
+                    "simple_id", sa.String(255), nullable=False, primary_key=True
+                ),
+                sa.Column("string_element", sa.String(255), nullable=False),
+            )
             metadata.create_all(engine)  # Creates the table
 
             with Session(engine) as session:
@@ -54,7 +60,7 @@ class SaSimpleRecordTest:
                 session.add_all([a_aa, b_bb])
                 session.commit()
 
-            with pytest.raises(sa.exc.IntegrityError): # noqa
+            with pytest.raises(sa.exc.IntegrityError):  # noqa
                 with Session(engine) as session:
 
                     # Update one of the object by writing another object with the same primary key

@@ -44,7 +44,10 @@ def get_trades(required_query_param: str, optional_query_param: Optional[int] = 
 
     Query parameters are specified after ? and can be optional.
     """
-    return {"required_query_param": required_query_param, "optional_query_param": optional_query_param}
+    return {
+        "required_query_param": required_query_param,
+        "optional_query_param": optional_query_param,
+    }
 
 
 @app.get("/example_raising_exception")

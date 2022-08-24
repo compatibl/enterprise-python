@@ -66,15 +66,13 @@ class WideCrudTest:
                 leg_type_1="Fixed",
                 leg_type_2="Floating",
                 leg_ccy_1=ccy_list[i % ccy_count],
-                leg_ccy_2="EUR"
+                leg_ccy_2="EUR",
             )
             for i in range(0, 2)
         ]
         bonds: List[WideTrade] = [
             WideBond(
-                trade_id=f"T{i+1}",
-                trade_type="Bond",
-                bond_ccy=ccy_list[i % ccy_count]
+                trade_id=f"T{i+1}", trade_type="Bond", bond_ccy=ccy_list[i % ccy_count]
             )
             for i in range(2, 3)
         ]
@@ -96,19 +94,25 @@ class WideCrudTest:
 
         # Retrieve all trades ordered by trade_id to avoid
         # receiving records in random order
-        all_trades = WideTrade.objects.order_by('trade_id')
+        all_trades = WideTrade.objects.order_by("trade_id")
 
         # Add the result to approvaltests file
         result += "All Trades:\n" + "".join(
-            [f"    trade_id={trade.trade_id} trade_type={trade.trade_type}\n" for trade in all_trades]
+            [
+                f"    trade_id={trade.trade_id} trade_type={trade.trade_type}\n"
+                for trade in all_trades
+            ]
         )
 
         # Retrieve only those trades that have type WideSwap
-        all_swaps = WideSwap.objects.order_by('trade_id')
+        all_swaps = WideSwap.objects.order_by("trade_id")
 
         # Add the result to approvaltests file
         result += "All Swaps:\n" + "".join(
-            [f"    trade_id={trade.trade_id} trade_type={trade.trade_type}\n" for trade in all_swaps]
+            [
+                f"    trade_id={trade.trade_id} trade_type={trade.trade_type}\n"
+                for trade in all_swaps
+            ]
         )
 
         # The objective is to retrieve only those trades that have type WideSwap
@@ -116,10 +120,14 @@ class WideCrudTest:
         # floating leg does not count.
 
         # This Iterable includes trades where leg 1 has type=Fixed and ccy=GBP
-        gbp_fixed_leg_1_swaps = WideSwap.objects(leg_type_1="Fixed", leg_ccy_1="GBP").order_by('trade_id')
+        gbp_fixed_leg_1_swaps = WideSwap.objects(
+            leg_type_1="Fixed", leg_ccy_1="GBP"
+        ).order_by("trade_id")
 
         # This Iterable includes trades where leg 2 has type=Fixed and ccy=GBP
-        gbp_fixed_leg_2_swaps = WideSwap.objects(leg_type_2="Fixed", leg_ccy_2="GBP").order_by('trade_id')
+        gbp_fixed_leg_2_swaps = WideSwap.objects(
+            leg_type_2="Fixed", leg_ccy_2="GBP"
+        ).order_by("trade_id")
 
         # This list combines items in both Iterables. For the purposes of this
         # exercise, we will assume that each swap has one Fixed leg and one
@@ -129,10 +137,12 @@ class WideCrudTest:
 
         # Add the result to approvaltests file
         result += "Swaps where fixed leg has GBP currency:\n" + "".join(
-            [f"    trade_id={trade.trade_id} trade_type={trade.trade_type} "
-             f"leg_type_1={trade.leg_type_1} leg_ccy_1={trade.leg_ccy_1} "
-             f"leg_type_2={trade.leg_type_2} leg_ccy_2={trade.leg_ccy_2}\n"
-             for trade in gbp_fixed]
+            [
+                f"    trade_id={trade.trade_id} trade_type={trade.trade_type} "
+                f"leg_type_1={trade.leg_type_1} leg_ccy_1={trade.leg_ccy_1} "
+                f"leg_type_2={trade.leg_type_2} leg_ccy_2={trade.leg_ccy_2}\n"
+                for trade in gbp_fixed
+            ]
         )
 
         # Verify result

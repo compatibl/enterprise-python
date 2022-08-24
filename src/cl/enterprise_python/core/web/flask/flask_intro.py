@@ -28,5 +28,5 @@ def get_root_page():
 
 
 # Run the built-in server locally on the default http port 8080
-if __name__ == '__main__':
-    app.run(host='localhost', port=50200, debug=True)
+if __name__ == "__main__":
+    app.run(host="localhost", port=50200, debug=True)

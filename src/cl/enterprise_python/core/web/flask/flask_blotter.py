@@ -57,7 +57,8 @@ def get_main_page():
         f"<td>{trade['legs'][0]['leg_ccy']}</td>"
         f"<td>{trade['legs'][1]['leg_ccy']}</td>"
         f"</tr>"
-        for trade in trades]
+        for trade in trades
+    ]
     table_rows = "\n".join(trade_rows)
 
     # Return complete page with header and footer
@@ -65,5 +66,5 @@ def get_main_page():
 
 
 # Run the built-in server locally on the default http port 8080
-if __name__ == '__main__':
-    app.run(host='localhost', port=50201, debug=True)
+if __name__ == "__main__":
+    app.run(host="localhost", port=50201, debug=True)

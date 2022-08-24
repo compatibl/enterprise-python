@@ -44,8 +44,8 @@ def create_trades(trade_count: int) -> List[TreeTrade]:
             trade_type="Swap",
             legs=[
                 TreeLeg(leg_type="Fixed", leg_ccy=ccy_list[i % ccy_count]),
-                TreeLeg(leg_type="Floating", leg_ccy=ccy_list[(2*i) % ccy_count]),
-            ]
+                TreeLeg(leg_type="Floating", leg_ccy=ccy_list[(2 * i) % ccy_count]),
+            ],
         )
         for i in range(trade_count)
     ]
@@ -104,9 +104,9 @@ def query_trades(leg_ccy: Optional[str] = None):
     # If leg_ccy is specified, return all trades where the currency for
     # at least one of the legs is leg_ccy, otherwise return all trades.
     if leg_ccy is not None:
-        trades = TreeSwap.objects(legs__leg_ccy=leg_ccy).order_by('trade_id')
+        trades = TreeSwap.objects(legs__leg_ccy=leg_ccy).order_by("trade_id")
     else:
-        trades = TreeSwap.objects.order_by('trade_id')
+        trades = TreeSwap.objects.order_by("trade_id")
     result = {"trades": [trade.to_json() for trade in trades]}
     return result
 

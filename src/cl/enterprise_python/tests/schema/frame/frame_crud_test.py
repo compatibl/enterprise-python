@@ -64,15 +64,13 @@ class FrameCrudTest:
                 trade_id=f"T{i+1}",
                 trade_type="Swap",
                 leg_type=["Fixed", "Floating"],
-                leg_ccy=[ccy_list[i % ccy_count], "EUR"]
+                leg_ccy=[ccy_list[i % ccy_count], "EUR"],
             )
             for i in range(0, 2)
         ]
         bonds = [
             FrameBond(
-                trade_id=f"T{i+1}",
-                trade_type="Bond",
-                bond_ccy=ccy_list[i % ccy_count]
+                trade_id=f"T{i+1}", trade_type="Bond", bond_ccy=ccy_list[i % ccy_count]
             )
             for i in range(2, 3)
         ]
@@ -92,24 +90,34 @@ class FrameCrudTest:
         FrameTrade.objects.insert(records)
 
         # Retrieve all trades
-        all_trades = FrameTrade.objects.order_by('trade_id')
+        all_trades = FrameTrade.objects.order_by("trade_id")
         result += "All Trades:\n" + "".join(
-            [f"    trade_id={trade.trade_id} trade_type={trade.trade_type}\n" for trade in all_trades]
+            [
+                f"    trade_id={trade.trade_id} trade_type={trade.trade_type}\n"
+                for trade in all_trades
+            ]
         )
 
         # Retrieve all swaps but skip bonds
-        all_swaps = FrameSwap.objects.order_by('trade_id')
+        all_swaps = FrameSwap.objects.order_by("trade_id")
 
         # Add the result to approvaltests file
         result += "All Swaps:\n" + "".join(
-            [f"    trade_id={trade.trade_id} trade_type={trade.trade_type}\n" for trade in all_swaps]
+            [
+                f"    trade_id={trade.trade_id} trade_type={trade.trade_type}\n"
+                for trade in all_swaps
+            ]
         )
 
         # This Iterable includes trades where leg 1 has type=Fixed and ccy=GBP
-        gbp_fixed_leg_1_swaps = FrameSwap.objects(leg_ccy__0="GBP", leg_type__0="Fixed").order_by('trade_id')
+        gbp_fixed_leg_1_swaps = FrameSwap.objects(
+            leg_ccy__0="GBP", leg_type__0="Fixed"
+        ).order_by("trade_id")
 
         # This Iterable includes trades where leg 2 has type=Fixed and ccy=GBP
-        gbp_fixed_leg_2_swaps = FrameSwap.objects(leg_ccy__1="GBP", leg_type__1="Fixed").order_by('trade_id')
+        gbp_fixed_leg_2_swaps = FrameSwap.objects(
+            leg_ccy__1="GBP", leg_type__1="Fixed"
+        ).order_by("trade_id")
 
         # This list combines items in both Iterables. For the purposes of this
         # exercise, we will assume that each swap has one Fixed leg and one
@@ -119,10 +127,12 @@ class FrameCrudTest:
 
         # Add the result to approvaltests file
         result += "Swaps where fixed leg has GBP currency:\n" + "".join(
-            [f"    trade_id={trade.trade_id} trade_type={trade.trade_type} "
-             f"leg_type[0]={trade.leg_type[0]} leg_ccy[0]={trade.leg_ccy[0]} "
-             f"leg_type[1]={trade.leg_type[1]} leg_ccy[1]={trade.leg_ccy[1]}\n"
-             for trade in gbp_fixed_swaps]
+            [
+                f"    trade_id={trade.trade_id} trade_type={trade.trade_type} "
+                f"leg_type[0]={trade.leg_type[0]} leg_ccy[0]={trade.leg_ccy[0]} "
+                f"leg_type[1]={trade.leg_type[1]} leg_ccy[1]={trade.leg_ccy[1]}\n"
+                for trade in gbp_fixed_swaps
+            ]
         )
 
         # Further study - for MongoDB and certain other databases, wildcard queries

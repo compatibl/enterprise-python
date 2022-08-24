@@ -18,7 +18,10 @@ import mongoengine as me
 class WideTradeKey(me.Document):  # Must inherit from Document
     """Primary key attributes of trade record."""
 
-    meta = {'db_alias': 'wide', 'allow_inheritance': True}  # Permit inheritance of record classes
+    meta = {
+        "db_alias": "wide",
+        "allow_inheritance": True,
+    }  # Permit inheritance of record classes
 
     trade_id = me.StringField(max_length=50)
     """Unique trade identifier (primary key)."""

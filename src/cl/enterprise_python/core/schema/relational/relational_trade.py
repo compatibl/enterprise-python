@@ -14,12 +14,15 @@
 
 from sqlalchemy import Column, String
 from sqlalchemy.orm import relationship
-from cl.enterprise_python.core.schema.relational.relational_trade_key import RelationalTradeKey
+from cl.enterprise_python.core.schema.relational.relational_trade_key import (
+    RelationalTradeKey,
+)
 
 
-class RelationalTrade(RelationalTradeKey):  # Inherits from RelTradeKey that has primary key attributes
+class RelationalTrade(
+    RelationalTradeKey
+):  # Inherits from RelTradeKey that has primary key attributes
     """Non-primary-key attributes common to all trades."""
 
     trade_type: str = Column(String)
     """Trade type."""
-

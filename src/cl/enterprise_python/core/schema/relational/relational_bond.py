@@ -16,7 +16,9 @@ from sqlalchemy import Column, String
 from cl.enterprise_python.core.schema.relational.relational_trade import RelationalTrade
 
 
-class RelationalBond(RelationalTrade):  # Inherits from RelTrade that has attributes common to all trades
+class RelationalBond(
+    RelationalTrade
+):  # Inherits from RelTrade that has attributes common to all trades
     """Remaining attributes of bond record."""
 
     bond_ccy: str = Column(String)

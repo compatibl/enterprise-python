@@ -16,7 +16,9 @@ import mongoengine as me
 from cl.enterprise_python.core.schema.wide.wide_trade import WideTrade
 
 
-class WideSwap(WideTrade):  # Inherits from WideTrade that has attributes common to all trades
+class WideSwap(
+    WideTrade
+):  # Inherits from WideTrade that has attributes common to all trades
     """Remaining attributes of swap record."""
 
     leg_type_1 = me.StringField(max_length=50)
@@ -30,4 +32,3 @@ class WideSwap(WideTrade):  # Inherits from WideTrade that has attributes common
 
     leg_ccy_2 = me.StringField(max_length=3)
     """Currency of leg 2."""
-

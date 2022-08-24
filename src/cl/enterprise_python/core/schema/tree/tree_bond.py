@@ -16,7 +16,9 @@ import mongoengine as me
 from cl.enterprise_python.core.schema.tree.tree_trade import TreeTrade
 
 
-class TreeBond(TreeTrade):  # Inherits from TreeTrade that has attributes common to all trades
+class TreeBond(
+    TreeTrade
+):  # Inherits from TreeTrade that has attributes common to all trades
     """Remaining attributes of bond record."""
 
     bond_ccy = me.StringField(max_length=3)

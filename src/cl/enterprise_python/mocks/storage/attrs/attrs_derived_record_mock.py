@@ -14,8 +14,12 @@
 
 from attrs import define
 import datetime as dt
-from cl.enterprise_python.mocks.storage.attrs.attrs_simple_data_mock import AttrsSimpleDataMock
-from cl.enterprise_python.mocks.storage.attrs.attrs_simple_record_mock import AttrsSimpleRecordMock
+from cl.enterprise_python.mocks.storage.attrs.attrs_simple_data_mock import (
+    AttrsSimpleDataMock,
+)
+from cl.enterprise_python.mocks.storage.attrs.attrs_simple_record_mock import (
+    AttrsSimpleRecordMock,
+)
 
 
 @define

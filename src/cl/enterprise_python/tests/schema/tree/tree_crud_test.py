@@ -66,16 +66,14 @@ class TreeCrudTest:
                 trade_type="Swap",
                 legs=[
                     TreeLeg(leg_type="Fixed", leg_ccy=ccy_list[i % ccy_count]),
-                    TreeLeg(leg_type="Floating", leg_ccy="EUR")
-                ]
+                    TreeLeg(leg_type="Floating", leg_ccy="EUR"),
+                ],
             )
             for i in range(0, 2)
         ]
         bonds = [
             TreeBond(
-                trade_id=f"T{i+1}",
-                trade_type="Bond",
-                bond_ccy=ccy_list[i % ccy_count]
+                trade_id=f"T{i+1}", trade_type="Bond", bond_ccy=ccy_list[i % ccy_count]
             )
             for i in range(2, 3)
         ]
@@ -95,19 +93,25 @@ class TreeCrudTest:
         TreeTrade.objects.insert(records)
 
         # Retrieve all trades
-        all_trades = TreeTrade.objects.order_by('trade_id')
+        all_trades = TreeTrade.objects.order_by("trade_id")
 
         # Add the result to approvaltests file
         result += "All Trades:\n" + "".join(
-            [f"    trade_id={trade.trade_id} trade_type={trade.trade_type}\n" for trade in all_trades]
+            [
+                f"    trade_id={trade.trade_id} trade_type={trade.trade_type}\n"
+                for trade in all_trades
+            ]
         )
 
         # Retrieve all swaps but skip bonds
-        all_swaps = TreeSwap.objects.order_by('trade_id')
+        all_swaps = TreeSwap.objects.order_by("trade_id")
 
         # Add the result to approvaltests file
         result += "All Swaps:\n" + "".join(
-            [f"    trade_id={trade.trade_id} trade_type={trade.trade_type}\n" for trade in all_swaps]
+            [
+                f"    trade_id={trade.trade_id} trade_type={trade.trade_type}\n"
+                for trade in all_swaps
+            ]
         )
 
         # The objective is to retrieve only those trades that have type WideSwap
@@ -118,13 +122,17 @@ class TreeCrudTest:
         # We use legs__0__leg_ccy parameter which is MongoEngine shortcut for
         # legs[0].leg_ccy (leg_ccy attribute of the element of the Legs array
         # with index 0)
-        gbp_fixed_leg_1_swaps = TreeSwap.objects(legs__0__leg_ccy="GBP", legs__0__leg_type="Fixed").order_by('trade_id')
+        gbp_fixed_leg_1_swaps = TreeSwap.objects(
+            legs__0__leg_ccy="GBP", legs__0__leg_type="Fixed"
+        ).order_by("trade_id")
 
         # This Iterable includes trades where leg 2 has type=Fixed and ccy=GBP
         # We use legs__1__leg_ccy parameter which is MongoEngine shortcut for
         # legs[1].leg_ccy (leg_ccy attribute of the element of the Legs array
         # with index 1)
-        gbp_fixed_leg_2_swaps = TreeSwap.objects(legs__1__leg_ccy="GBP", legs__1__leg_type="Fixed").order_by('trade_id')
+        gbp_fixed_leg_2_swaps = TreeSwap.objects(
+            legs__1__leg_ccy="GBP", legs__1__leg_type="Fixed"
+        ).order_by("trade_id")
 
         # This list combines items in both Iterables. For the purposes of this
         # exercise, we will assume that each swap has one Fixed leg and one
@@ -134,10 +142,12 @@ class TreeCrudTest:
 
         # Add the result to approvaltests file
         result += "Swaps where fixed leg has GBP currency:\n" + "".join(
-            [f"    trade_id={trade.trade_id} trade_type={trade.trade_type} "
-             f"leg_type[0]={trade.legs[0].leg_type} leg_ccy[0]={trade.legs[0].leg_ccy} "
-             f"leg_type[1]={trade.legs[1].leg_type} leg_ccy[1]={trade.legs[1].leg_ccy}\n"
-             for trade in gbp_fixed_swaps]
+            [
+                f"    trade_id={trade.trade_id} trade_type={trade.trade_type} "
+                f"leg_type[0]={trade.legs[0].leg_type} leg_ccy[0]={trade.legs[0].leg_ccy} "
+                f"leg_type[1]={trade.legs[1].leg_type} leg_ccy[1]={trade.legs[1].leg_ccy}\n"
+                for trade in gbp_fixed_swaps
+            ]
         )
 
         # Further study - for MongoDB and certain other databases, wildcard queries
