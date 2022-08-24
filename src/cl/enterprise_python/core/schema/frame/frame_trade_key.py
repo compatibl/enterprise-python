@@ -15,8 +15,12 @@
 import mongoengine as me
 
 
-class FrameTradeKey(me.Document):  # Must inherit from Document
-    """Primary key attributes of trade record."""
+class FrameTradeKey(me.Document):
+    """
+    Primary key attributes of trade record.
+    
+    Must inherit from Document.
+    """
 
     meta = {
         "db_alias": "table",

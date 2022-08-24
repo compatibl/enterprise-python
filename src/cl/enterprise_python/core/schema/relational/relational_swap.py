@@ -16,7 +16,9 @@ from sqlalchemy.orm import relationship
 from cl.enterprise_python.core.schema.relational.relational_trade import RelationalTrade
 
 
-class RelationalSwap(
-    RelationalTrade
-):  # Inherits from RelTrade that has attributes common to all trades
-    """Remaining attributes of swap record."""
+class RelationalSwap(RelationalTrade):
+    """
+    Remaining attributes of swap record.
+    
+    Inherits from RelTrade that has attributes common to all trades.
+    """

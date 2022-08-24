@@ -16,10 +16,12 @@ import mongoengine as me
 from cl.enterprise_python.core.schema.wide.wide_trade import WideTrade
 
 
-class WideBond(
-    WideTrade
-):  # Inherits from WideTrade that has attributes common to all trades
-    """Remaining attributes of bond record."""
+class WideBond(WideTrade):
+    """
+    Remaining attributes of bond record.
+    
+    Inherits from WideTrade that has attributes common to all trades.
+    """
 
     bond_ccy = me.StringField(max_length=3)
     """Bond currency."""

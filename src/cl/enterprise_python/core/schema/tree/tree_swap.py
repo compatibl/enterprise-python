@@ -17,10 +17,12 @@ from cl.enterprise_python.core.schema.tree.tree_leg import TreeLeg
 from cl.enterprise_python.core.schema.tree.tree_trade import TreeTrade
 
 
-class TreeSwap(
-    TreeTrade
-):  # Inherits from TreeTrade that has attributes common to all trades
-    """Remaining attributes of swap record."""
+class TreeSwap(TreeTrade):
+    """
+    Remaining attributes of swap record.
+    
+    Inherits from TreeTrade that has attributes common to all trades
+    """
 
     legs = me.ListField(me.EmbeddedDocumentField(TreeLeg))
     """List of swap legs."""

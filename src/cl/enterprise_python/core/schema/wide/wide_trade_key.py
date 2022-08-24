@@ -15,8 +15,12 @@
 import mongoengine as me
 
 
-class WideTradeKey(me.Document):  # Must inherit from Document
-    """Primary key attributes of trade record."""
+class WideTradeKey(me.Document):
+    """
+    Primary key attributes of trade record.
+    
+    Must inherit from Document.
+    """
 
     meta = {
         "db_alias": "wide",

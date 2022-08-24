@@ -19,10 +19,12 @@ from cl.enterprise_python.core.schema.relational.relational_trade_key import (
 )
 
 
-class RelationalTrade(
-    RelationalTradeKey
-):  # Inherits from RelTradeKey that has primary key attributes
-    """Non-primary-key attributes common to all trades."""
+class RelationalTrade(RelationalTradeKey):
+    """
+    Non-primary-key attributes common to all trades.
+    
+    Inherits from RelTradeKey that has primary key attributes.
+    """
 
     trade_type: str = Column(String)
     """Trade type."""

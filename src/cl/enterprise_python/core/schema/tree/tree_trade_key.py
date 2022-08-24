@@ -15,8 +15,12 @@
 import mongoengine as me
 
 
-class TreeTradeKey(me.Document):  # Must inherit from Document
-    """Primary key attributes of trade record."""
+class TreeTradeKey(me.Document):
+    """
+    Primary key attributes of trade record.
+    
+    Must inherit from Document.
+    """
 
     meta = {
         "db_alias": "tree",

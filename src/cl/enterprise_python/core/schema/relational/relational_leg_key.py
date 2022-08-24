@@ -19,8 +19,12 @@ from sqlalchemy.orm import declarative_base
 Base = declarative_base()
 
 
-class RelationalLegKey(Base):  # Must inherit from Base
-    """Primary key attributes of trade record."""
+class RelationalLegKey(Base):
+    """
+    Primary key attributes of trade record.
+    
+    Must inherit from Base.
+    """
 
     __tablename__ = "rel_leg"
 
