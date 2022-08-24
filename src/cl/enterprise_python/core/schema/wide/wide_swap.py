@@ -16,10 +16,10 @@ import mongoengine as me
 from cl.enterprise_python.core.schema.wide.wide_trade import WideTrade
 
 
-class WideSwap(WideTrade):  
+class WideSwap(WideTrade):
     """
     Remaining attributes of swap record.
-    
+
     Inherits from WideTrade that has attributes common to all trades.
     """
 

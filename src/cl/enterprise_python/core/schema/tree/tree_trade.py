@@ -19,7 +19,7 @@ from cl.enterprise_python.core.schema.tree.tree_trade_key import TreeTradeKey
 class TreeTrade(TreeTradeKey):
     """
     Non-primary-key attributes common to all trades.
-    
+
     Inherits from TreeTradeKey that has primary key attributes.
     """
 

@@ -22,7 +22,7 @@ Base = declarative_base()
 class RelationalLegKey(Base):
     """
     Primary key attributes of trade record.
-    
+
     Must inherit from Base.
     """
 

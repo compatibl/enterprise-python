@@ -21,7 +21,7 @@ Base = declarative_base()
 class RelationalTradeKey(Base):
     """
     Primary key attributes of trade record.
-    
+
     Must inherit from Base.
     """
 

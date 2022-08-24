@@ -19,6 +19,6 @@ from cl.enterprise_python.core.schema.relational.relational_trade import Relatio
 class RelationalSwap(RelationalTrade):
     """
     Remaining attributes of swap record.
-    
+
     Inherits from RelTrade that has attributes common to all trades.
     """

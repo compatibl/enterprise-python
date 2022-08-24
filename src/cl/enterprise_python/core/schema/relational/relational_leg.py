@@ -22,7 +22,7 @@ from cl.enterprise_python.core.schema.relational.relational_leg_key import (
 class RelationalLeg(RelationalLegKey):
     """
     Swap leg.
-    
+
     Inherits from RelLegKey that has primary key attributes.
     """
 

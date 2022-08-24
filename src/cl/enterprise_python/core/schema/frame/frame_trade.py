@@ -19,7 +19,7 @@ from cl.enterprise_python.core.schema.frame.frame_trade_key import FrameTradeKey
 class FrameTrade(FrameTradeKey):
     """
     Non-primary-key attributes common to all trades.
-    
+
     Inherits from FrameTradeKey that has primary key attributes.
     """
 

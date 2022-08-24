@@ -18,7 +18,7 @@ import mongoengine as me
 class TreeTradeKey(me.Document):
     """
     Primary key attributes of trade record.
-    
+
     Must inherit from Document.
     """
 

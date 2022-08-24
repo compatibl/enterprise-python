@@ -19,7 +19,7 @@ from cl.enterprise_python.core.schema.wide.wide_trade_key import WideTradeKey
 class WideTrade(WideTradeKey):
     """
     Non-primary-key attributes common to all trades.
-    
+
     Inherits from WideTradeKey that has primary key attributes
     """
 

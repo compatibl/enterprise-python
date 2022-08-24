@@ -19,7 +19,7 @@ from cl.enterprise_python.core.schema.relational.relational_trade import Relatio
 class RelationalBond(RelationalTrade):
     """
     Remaining attributes of bond record.
-    
+
     Inherits from RelTrade that has attributes common to all trades.
     """
 

@@ -20,7 +20,7 @@ from cl.enterprise_python.core.schema.tree.tree_trade import TreeTrade
 class TreeSwap(TreeTrade):
     """
     Remaining attributes of swap record.
-    
+
     Inherits from TreeTrade that has attributes common to all trades
     """
 

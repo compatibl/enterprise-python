@@ -19,7 +19,7 @@ from cl.enterprise_python.core.schema.wide.wide_trade import WideTrade
 class WideBond(WideTrade):
     """
     Remaining attributes of bond record.
-    
+
     Inherits from WideTrade that has attributes common to all trades.
     """
 

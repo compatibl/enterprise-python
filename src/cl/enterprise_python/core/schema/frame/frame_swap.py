@@ -16,10 +16,10 @@ import mongoengine as me
 from cl.enterprise_python.core.schema.frame.frame_trade import FrameTrade
 
 
-class FrameSwap(FrameTrade): 
+class FrameSwap(FrameTrade):
     """
     Remaining attributes of swap record.
-    
+
     Inherits from FrameTrade that has attributes common to all trades.
     """
 

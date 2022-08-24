@@ -19,7 +19,7 @@ from cl.enterprise_python.core.schema.tree.tree_trade import TreeTrade
 class TreeBond(TreeTrade):
     """
     Remaining attributes of bond record.
-    
+
     Inherits from TreeTrade that has attributes common to all trades.
     """
 

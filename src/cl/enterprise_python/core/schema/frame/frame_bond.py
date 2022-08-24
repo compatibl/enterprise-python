@@ -19,7 +19,7 @@ from cl.enterprise_python.core.schema.frame.frame_trade import FrameTrade
 class FrameBond(FrameTrade):
     """
     Remaining attributes of bond record.
-    
+
     Inherits from FrameTrade that has attributes common to all trades
     """
 
