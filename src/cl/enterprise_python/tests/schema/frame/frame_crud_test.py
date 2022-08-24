@@ -99,14 +99,25 @@ class FrameCrudTest:
 
         # Retrieve all swaps but skip bonds
         all_swaps = FrameSwap.objects.order_by('trade_id')
+
+        # Add the result to approvaltests file
         result += "All Swaps:\n" + "".join(
             [f"    trade_id={trade.trade_id} trade_type={trade.trade_type}\n" for trade in all_swaps]
         )
 
-        # Retrieve swaps where fixed leg has GBP currency
+        # This Iterable includes trades where leg 1 has type=Fixed and ccy=GBP
         gbp_fixed_leg_1_swaps = FrameSwap.objects(leg_ccy__0="GBP", leg_type__0="Fixed").order_by('trade_id')
+
+        # This Iterable includes trades where leg 2 has type=Fixed and ccy=GBP
         gbp_fixed_leg_2_swaps = FrameSwap.objects(leg_ccy__1="GBP", leg_type__1="Fixed").order_by('trade_id')
+
+        # This list combines items in both Iterables. For the purposes of this
+        # exercise, we will assume that each swap has one Fixed leg and one
+        # Floating leg (most of the swaps traded in the market are like that),
+        # so we do not need to eliminate duplicates.
         gbp_fixed_swaps = list(gbp_fixed_leg_1_swaps) + list(gbp_fixed_leg_2_swaps)
+
+        # Add the result to approvaltests file
         result += "Swaps where fixed leg has GBP currency:\n" + "".join(
             [f"    trade_id={trade.trade_id} trade_type={trade.trade_type} "
              f"leg_type[0]={trade.leg_type[0]} leg_ccy[0]={trade.leg_ccy[0]} "
@@ -114,14 +125,9 @@ class FrameCrudTest:
              for trade in gbp_fixed_swaps]
         )
 
-        # Retrieve swaps where any leg has GBP currency, uses select by any list element
-        gbp_swaps = FrameSwap.objects(leg_ccy="GBP").order_by('trade_id')
-        result += "Swaps where any leg has GBP currency:\n" + "".join(
-            [f"    trade_id={trade.trade_id} trade_type={trade.trade_type} "
-             f"leg_type[0]={trade.leg_type[0]} leg_ccy[0]={trade.leg_ccy[0]} "
-             f"leg_type[1]={trade.leg_type[1]} leg_ccy[1]={trade.leg_ccy[1]}\n"
-             for trade in gbp_swaps]
-        )
+        # Further reading - for MongoDB and certain other databases, wildcard queries
+        # can be used to simultaneously query for GBP currency in both legs when this
+        # data format is used. These advanced queries are outside the scope of this course.
 
         # Verify result
         at.verify(result)
