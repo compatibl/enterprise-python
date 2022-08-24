@@ -15,6 +15,8 @@ Course material includes:
 * Best practices in using classes and inheritance
 * Best practices in testing and unit test frameworks - unittest, pytest
 * Best practices for working with complex data – dataclass, attrs, pydantic
-* Designing and responsibly versioning microservices
-* Creating useful and concise documentation
-* Packaging your software for distribution
+* Working with SQL databases - sqlalchemy
+* Working with document databases - MongoEngine
+* Designing and responsibly versioning microservices - FastAPI
+* Building web apps - Flask and Bottle
+
