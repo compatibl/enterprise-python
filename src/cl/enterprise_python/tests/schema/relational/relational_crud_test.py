@@ -58,14 +58,14 @@ class RelCrudTest:
         # Create swap records
         swaps = [
             RelationalSwap(
-                trade_id=f"T{i+1}",
+                trade_id=f"T{i + 1}",
                 trade_type="Swap"
             )
             for i in range(0, 2)
         ]
         bonds = [
             RelationalBond(
-                trade_id=f"T{i+ 1}",
+                trade_id=f"T{i + 1}",
                 trade_type="Bond",
                 bond_ccy=ccy_list[i % ccy_count]
             )
@@ -73,12 +73,12 @@ class RelCrudTest:
         ]
 
         fixed_legs = [
-            RelationalLeg(leg_id=f"L{i+1}1", trade_id=f"T{i+1}", leg_type="Fixed", leg_ccy=ccy_list[i % ccy_count])
+            RelationalLeg(leg_id=f"L{i + 1}1", trade_id=f"T{i + 1}", leg_type="Fixed", leg_ccy=ccy_list[i % ccy_count])
             for i in range(0, 2)
         ]
 
         floating_legs = [
-            RelationalLeg(leg_id=f"L{i+1}2",trade_id=f"T{i+ 1}", leg_type="Floating", leg_ccy="EUR")
+            RelationalLeg(leg_id=f"L{i + 1}2", trade_id=f"T{i + 1}", leg_type="Floating", leg_ccy="EUR")
             for i in range(0, 2)
         ]
 
@@ -97,23 +97,21 @@ class RelCrudTest:
         trades, legs = self.create_records()
 
         with engine.connect() as connection:
-
             metadata = sa.MetaData()
             trade_table = sa.Table('rel_trade', metadata,
-                             sa.Column('trade_id', sa.String(255), nullable=False, primary_key=True),
-                             sa.Column('trade_type', sa.String(255), nullable=False),
-                             sa.Column('bond_ccy', sa.String(255), nullable=True),
-                             )
-            leg_table = sa.Table('rel_leg', metadata,
-                                   sa.Column('leg_id', sa.String(255), nullable=False, primary_key=True),
-                                   sa.Column('trade_id', sa.String(255), nullable=False),
-                                   sa.Column('leg_type', sa.String(255), nullable=True),
-                                   sa.Column('leg_ccy', sa.String(255), nullable=True),
+                                   sa.Column('trade_id', sa.String(255), nullable=False, primary_key=True),
+                                   sa.Column('trade_type', sa.String(255), nullable=False),
+                                   sa.Column('bond_ccy', sa.String(255), nullable=True),
                                    )
+            leg_table = sa.Table('rel_leg', metadata,
+                                 sa.Column('leg_id', sa.String(255), nullable=False, primary_key=True),
+                                 sa.Column('trade_id', sa.String(255), nullable=False),
+                                 sa.Column('leg_type', sa.String(255), nullable=True),
+                                 sa.Column('leg_ccy', sa.String(255), nullable=True),
+                                 )
             metadata.create_all(engine)  # Creates the table
 
             with Session(engine) as session:
-
                 # Write the trade and leg records and commit
                 session.add_all(trades)
                 session.add_all(legs)
