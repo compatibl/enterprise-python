@@ -83,7 +83,7 @@ class RelCrudTest:
             RelationalSwap(
                 trade_id=f"T{i + 1}",
                 trade_type="Swap",
-                legs=[fixed_legs[i], floating_legs[i]]
+                legs=[fixed_legs[i], floating_legs[i]],
             )
             for i in range(0, 2)
         ]
@@ -128,7 +128,9 @@ class RelCrudTest:
 
                 # Retrieve all trades
                 # Must use noqa because PyCharm linter thinks does not return anything
-                all_trades = list(session.query(RelationalTrade).order_by(RelationalTrade.trade_id)) # noqa
+                all_trades = list(
+                    session.query(RelationalTrade).order_by(RelationalTrade.trade_id)
+                )  # noqa
 
                 # Add the result to approvaltests file
                 result += "All Trades:\n" + "".join(
@@ -141,7 +143,11 @@ class RelCrudTest:
                 # Retrieve all swaps but skip bonds, use trade_type instead of
                 # class name to avoid creating even more complex ORM mapping
                 # Must use noqa because PyCharm linter thinks does not return anything
-                all_swaps = list(session.query(RelationalSwap).where(RelationalSwap.trade_type=="Swap").order_by(RelationalSwap.trade_id)) # noqa
+                all_swaps = list(
+                    session.query(RelationalSwap)
+                    .where(RelationalSwap.trade_type == "Swap")
+                    .order_by(RelationalSwap.trade_id)
+                )  # noqa
 
                 # Add the result to approvaltests file
                 result += "All Swaps:\n" + "".join(
@@ -159,7 +165,18 @@ class RelCrudTest:
                 #  For the purposes of this exercise, we will assume that each swap has
                 #  one Fixed leg and one Floating leg (most of the swaps traded in the
                 #  market are like that), so we do not need to eliminate duplicates.
-                gbp_fixed_swaps = list(session.query(RelationalSwap).join(RelationalLeg).where(sa.and_(RelationalSwap.trade_type=="Swap", RelationalLeg.leg_ccy=="GBP", RelationalLeg.leg_type=="Fixed")).order_by(RelationalSwap.trade_id)) # noqa
+                gbp_fixed_swaps = list(
+                    session.query(RelationalSwap)
+                    .join(RelationalLeg)
+                    .where(
+                        sa.and_(
+                            RelationalSwap.trade_type == "Swap",
+                            RelationalLeg.leg_ccy == "GBP",
+                            RelationalLeg.leg_type == "Fixed",
+                        )
+                    )
+                    .order_by(RelationalSwap.trade_id)
+                )  # noqa
 
                 # Add the result to approvaltests file
                 result += "Swaps where fixed leg has GBP currency:\n" + "".join(

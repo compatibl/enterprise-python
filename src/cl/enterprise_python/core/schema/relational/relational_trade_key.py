@@ -24,7 +24,7 @@ class RelationalTradeKey(RelationalBase):
     """
 
     __tablename__ = "rel_trade"
-    __table_args__ = {'extend_existing': True}
+    __table_args__ = {"extend_existing": True}
 
     trade_id: str = sa.Column(sa.String, primary_key=True)
     """Unique trade identifier (primary key)."""
