@@ -12,13 +12,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from sqlalchemy import Column, String
-from sqlalchemy.orm import declarative_base
-
-Base = declarative_base()
+import sqlalchemy as sa
+from cl.enterprise_python.core.schema.relational.relational_base import RelationalBase
 
 
-class RelationalTradeKey(Base):
+class RelationalTradeKey(RelationalBase):
     """
     Primary key attributes of trade record.
 
@@ -26,6 +24,7 @@ class RelationalTradeKey(Base):
     """
 
     __tablename__ = "rel_trade"
+    __table_args__ = {'extend_existing': True}
 
-    trade_id: str = Column(String, primary_key=True)
+    trade_id: str = sa.Column(sa.String, primary_key=True)
     """Unique trade identifier (primary key)."""

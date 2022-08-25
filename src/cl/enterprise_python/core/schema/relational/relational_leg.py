@@ -13,7 +13,6 @@
 # limitations under the License.
 
 import sqlalchemy as sa
-from sqlalchemy import Column, String
 from cl.enterprise_python.core.schema.relational.relational_leg_key import (
     RelationalLegKey,
 )
@@ -26,11 +25,11 @@ class RelationalLeg(RelationalLegKey):
     Inherits from RelLegKey that has primary key attributes.
     """
 
-    trade_id: str = Column(String)
+    trade_id: str = sa.Column(sa.String)
     """Identifier of trade to which the leg belongs (foreign key)."""
 
-    leg_type: str = Column(String)
+    leg_type: str = sa.Column(sa.String)
     """Leg type."""
 
-    leg_ccy: str = Column(String)
+    leg_ccy: str = sa.Column(sa.String)
     """Leg currency."""

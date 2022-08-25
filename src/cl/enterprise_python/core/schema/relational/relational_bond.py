@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from sqlalchemy import Column, String
+import sqlalchemy as sa
 from cl.enterprise_python.core.schema.relational.relational_trade import RelationalTrade
 
 
@@ -23,5 +23,5 @@ class RelationalBond(RelationalTrade):
     Inherits from RelTrade that has attributes common to all trades.
     """
 
-    bond_ccy: str = Column(String)
+    bond_ccy: str = sa.Column(sa.String)
     """Bond currency."""

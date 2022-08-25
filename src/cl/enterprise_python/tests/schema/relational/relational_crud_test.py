@@ -16,9 +16,10 @@
 import pytest
 import os
 import sqlalchemy as sa
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session, declarative_base
 from typing import List, Any, Tuple
 
+from cl.enterprise_python.core.schema.relational.relational_base import RelationalBase
 from cl.enterprise_python.core.schema.relational.relational_bond import RelationalBond
 from cl.enterprise_python.core.schema.relational.relational_leg import RelationalLeg
 from cl.enterprise_python.core.schema.relational.relational_swap import RelationalSwap
@@ -105,25 +106,12 @@ class RelCrudTest:
         trades, legs = self.create_records()
 
         with engine.connect() as connection:
-            metadata = sa.MetaData()
-            trade_table = sa.Table(
-                "rel_trade",
-                metadata,
-                sa.Column("trade_id", sa.String(255), nullable=False, primary_key=True),
-                sa.Column("trade_type", sa.String(255), nullable=False),
-                sa.Column("bond_ccy", sa.String(255), nullable=True),
-            )
-            leg_table = sa.Table(
-                "rel_leg",
-                metadata,
-                sa.Column("leg_id", sa.String(255), nullable=False, primary_key=True),
-                sa.Column("trade_id", sa.String(255), nullable=False),
-                sa.Column("leg_type", sa.String(255), nullable=True),
-                sa.Column("leg_ccy", sa.String(255), nullable=True),
-            )
-            metadata.create_all(engine)  # Creates the table
+
+            # Create schema
+            RelationalBase.metadata.create_all(engine)
 
             with Session(engine) as session:
+
                 # Write the trade and leg records and commit
                 session.add_all(trades)
                 session.add_all(legs)

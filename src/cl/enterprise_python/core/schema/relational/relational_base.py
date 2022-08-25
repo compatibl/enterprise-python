@@ -12,12 +12,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from cl.enterprise_python.core.schema.relational.relational_trade import RelationalTrade
+from sqlalchemy.orm import declarative_base
 
-
-class RelationalSwap(RelationalTrade):
-    """
-    Remaining attributes of swap record.
-
-    Inherits from RelTrade that has attributes common to all trades.
-    """
+# The function declarative_base() returns class that holds a
+# reference to a new instance of sqlalchemy schema. All classes
+# that belong to the schema must import class RelationalBase from
+# this module in order. They cannot make their own call to the
+# declarative_base() function as such call would create a new,
+# independent instance of the schema.
+RelationalBase = declarative_base()

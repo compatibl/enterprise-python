@@ -13,20 +13,18 @@
 # limitations under the License.
 
 import sqlalchemy as sa
-from sqlalchemy import Column, String
-from sqlalchemy.orm import declarative_base
-
-Base = declarative_base()
+from cl.enterprise_python.core.schema.relational.relational_base import RelationalBase
 
 
-class RelationalLegKey(Base):
+class RelationalLegKey(RelationalBase):
     """
     Primary key attributes of trade record.
 
     Must inherit from Base.
     """
 
-    __tablename__ = "rel_leg"
+    __tablename__ = 'rel_leg'
+    __table_args__ = {'extend_existing': True}
 
-    leg_id: str = Column(String, primary_key=True)
+    leg_id: str = sa.Column(sa.String, primary_key=True)
     """Unique trade identifier (primary key)."""

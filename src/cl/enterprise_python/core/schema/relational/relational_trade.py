@@ -12,8 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from sqlalchemy import Column, String
-from sqlalchemy.orm import relationship
+import sqlalchemy as sa
 from cl.enterprise_python.core.schema.relational.relational_trade_key import (
     RelationalTradeKey,
 )
@@ -26,5 +25,5 @@ class RelationalTrade(RelationalTradeKey):
     Inherits from RelTradeKey that has primary key attributes.
     """
 
-    trade_type: str = Column(String)
+    trade_type: str = sa.Column(sa.String)
     """Trade type."""
