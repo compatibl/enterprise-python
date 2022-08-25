@@ -13,6 +13,7 @@
 # limitations under the License.
 
 import sqlalchemy as sa
+from sqlalchemy.orm import relationship
 from cl.enterprise_python.core.schema.relational.relational_base import RelationalBase
 
 
@@ -28,3 +29,9 @@ class RelationalLegKey(RelationalBase):
 
     leg_id: str = sa.Column(sa.String, primary_key=True)
     """Unique trade identifier (primary key)."""
+
+    trade_id: str = sa.Column(sa.String, sa.ForeignKey("rel_trade.trade_id"))
+    """Identifier of trade to which the leg belongs (foreign key)."""
+
+    swap = relationship("RelationalSwap", back_populates="legs")
+    """Reference from leg to swap."""

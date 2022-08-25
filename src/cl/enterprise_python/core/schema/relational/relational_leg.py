@@ -25,9 +25,6 @@ class RelationalLeg(RelationalLegKey):
     Inherits from RelLegKey that has primary key attributes.
     """
 
-    trade_id: str = sa.Column(sa.String)
-    """Identifier of trade to which the leg belongs (foreign key)."""
-
     leg_type: str = sa.Column(sa.String)
     """Leg type."""
 
