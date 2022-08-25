@@ -16,9 +16,9 @@
 import pytest
 import os
 import sqlalchemy as sa
-from sqlalchemy.orm import Session, declarative_base
-from typing import List, Any, Tuple
-
+from sqlalchemy.orm import Session
+from typing import List, Any
+import approvaltests as at
 from cl.enterprise_python.core.schema.relational.relational_base import RelationalBase
 from cl.enterprise_python.core.schema.relational.relational_bond import RelationalBond
 from cl.enterprise_python.core.schema.relational.relational_leg import RelationalLeg
@@ -109,6 +109,9 @@ class RelCrudTest:
         # Drop database in case it is left over from the previous test
         self.clean_up()
 
+        # Set up result string
+        result = ""
+
         # Create swap records
         trades = self.create_records()
 
@@ -122,6 +125,54 @@ class RelCrudTest:
                 # Write the trade and leg records and commit
                 session.add_all(trades)
                 session.commit()
+
+                # Retrieve all trades
+                # Must use noqa because PyCharm linter thinks does not return anything
+                all_trades = list(session.query(RelationalTrade).order_by(RelationalTrade.trade_id)) # noqa
+
+                # Add the result to approvaltests file
+                result += "All Trades:\n" + "".join(
+                    [
+                        f"    trade_id={trade.trade_id} trade_type={trade.trade_type}\n"
+                        for trade in all_trades
+                    ]
+                )
+
+                # Retrieve all swaps but skip bonds, use trade_type instead of
+                # class name to avoid creating even more complex ORM mapping
+                # Must use noqa because PyCharm linter thinks does not return anything
+                all_swaps = list(session.query(RelationalSwap).where(RelationalSwap.trade_type=="Swap").order_by(RelationalSwap.trade_id)) # noqa
+
+                # Add the result to approvaltests file
+                result += "All Swaps:\n" + "".join(
+                    [
+                        f"    trade_id={trade.trade_id} trade_type={trade.trade_type}\n"
+                        for trade in all_swaps
+                    ]
+                )
+
+                # The objective is to retrieve only those trades that have type WideSwap
+                # and have GBP currency for the fixed leg. Having GBP currency for the
+                # floating leg does not count.
+
+                # This Iterable includes trades where a leg has type=Fixed and ccy=GBP
+                #  For the purposes of this exercise, we will assume that each swap has
+                #  one Fixed leg and one Floating leg (most of the swaps traded in the
+                #  market are like that), so we do not need to eliminate duplicates.
+                gbp_fixed_swaps = list(session.query(RelationalSwap).join(RelationalLeg).where(sa.and_(RelationalSwap.trade_type=="Swap", RelationalLeg.leg_ccy=="GBP", RelationalLeg.leg_type=="Fixed")).order_by(RelationalSwap.trade_id)) # noqa
+
+                # Add the result to approvaltests file
+                result += "Swaps where fixed leg has GBP currency:\n" + "".join(
+                    [
+                        f"    trade_id={trade.trade_id} trade_type={trade.trade_type} "
+                        f"leg_type[0]={trade.legs[0].leg_type} leg_ccy[0]={trade.legs[0].leg_ccy} "
+                        f"leg_type[1]={trade.legs[1].leg_type} leg_ccy[1]={trade.legs[1].leg_ccy}\n"
+                        for trade in gbp_fixed_swaps
+                    ]
+                )
+
+        # Verify result
+        at.verify(result)
 
         # Drop database to clean up after the test
         # self.clean_up()
