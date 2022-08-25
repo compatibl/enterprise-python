@@ -23,5 +23,5 @@ class RelationalSwap(RelationalTrade):
     Inherits from RelTrade that has attributes common to all trades.
     """
 
-    legs = relationship("RelationalLegKey", back_populates="swap")
+    legs = relationship("RelationalLeg", back_populates="swap")
     """Reference to legs."""

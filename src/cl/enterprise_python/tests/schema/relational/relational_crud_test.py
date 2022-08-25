@@ -48,7 +48,7 @@ class RelCrudTest:
         if os.path.exists(self._db_file_name):
             os.remove(self._db_file_name)
 
-    def create_records(self) -> Tuple[List[RelationalTrade], List[RelationalLeg]]:
+    def create_records(self) -> List[RelationalTrade]:
         """
         Return a list of random records objects.
         This method does not write to the database.
@@ -57,19 +57,6 @@ class RelCrudTest:
         # Create a list of currencies to populate swap records
         ccy_list = ["USD", "GBP", "JPY", "NOK", "AUD"]
         ccy_count = len(ccy_list)
-
-        # Create swap records
-        swaps = [
-            RelationalSwap(trade_id=f"T{i + 1}", trade_type="Swap") for i in range(0, 2)
-        ]
-        bonds = [
-            RelationalBond(
-                trade_id=f"T{i + 1}",
-                trade_type="Bond",
-                bond_ccy=ccy_list[i % ccy_count],
-            )
-            for i in range(2, 3)
-        ]
 
         fixed_legs = [
             RelationalLeg(
@@ -91,7 +78,27 @@ class RelCrudTest:
             for i in range(0, 2)
         ]
 
-        return swaps + bonds, fixed_legs + floating_legs
+        # Create swap records using legs
+        swaps: List[RelationalTrade] = [
+            RelationalSwap(
+                trade_id=f"T{i + 1}",
+                trade_type="Swap",
+                legs=[fixed_legs[i], floating_legs[i]]
+            )
+            for i in range(0, 2)
+        ]
+
+        # Create bond records
+        bonds: List[RelationalTrade] = [
+            RelationalBond(
+                trade_id=f"T{i + 1}",
+                trade_type="Bond",
+                bond_ccy=ccy_list[i % ccy_count],
+            )
+            for i in range(2, 3)
+        ]
+
+        return swaps + bonds
 
     def test_crud(self):
         """Test CRUD operations."""
@@ -103,7 +110,7 @@ class RelCrudTest:
         self.clean_up()
 
         # Create swap records
-        trades, legs = self.create_records()
+        trades = self.create_records()
 
         with engine.connect() as connection:
 
@@ -114,7 +121,6 @@ class RelCrudTest:
 
                 # Write the trade and leg records and commit
                 session.add_all(trades)
-                session.add_all(legs)
                 session.commit()
 
         # Drop database to clean up after the test
